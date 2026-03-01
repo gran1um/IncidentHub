@@ -1,0 +1,23 @@
+{
+  "name": "incidenthub-docs",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "sync:openapi": "node ./scripts/sync-openapi.mjs",
+    "sync:docs": "node ./scripts/sync-docs.mjs",
+    "sync": "pnpm run sync:openapi && pnpm run sync:docs",
+    "start": "pnpm run sync && docusaurus start --host 0.0.0.0 --port 3200",
+    "build": "pnpm run sync && docusaurus build",
+    "serve": "docusaurus serve --port 3200",
+    "clear": "docusaurus clear"
+  },
+  "dependencies": {
+    "@docusaurus/core": "3.9.2",
+    "@docusaurus/preset-classic": "3.9.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

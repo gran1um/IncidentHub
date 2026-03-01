@@ -1,0 +1,3144 @@
+{
+  "components": {
+    "schemas": {
+      "AIAssistRequest": {
+        "properties": {
+          "question": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "question"
+        ],
+        "type": "object"
+      },
+      "Alert": {
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "pap": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tenant_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "tlp": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Case": {
+        "properties": {
+          "assigned_to": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "case_number": {
+            "type": "string"
+          },
+          "closed_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "confidence": {
+            "type": "integer"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "detected_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "impact": {
+            "type": "string"
+          },
+          "incident_type": {
+            "type": "string"
+          },
+          "occurred_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "pap": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string"
+          },
+          "resolution_summary": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tenant_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "tlp": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "CaseCommunicationCreateRequest": {
+        "properties": {
+          "channel": {
+            "type": "string"
+          },
+          "connector_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "participant": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "status": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "connector_id"
+        ],
+        "type": "object"
+      },
+      "CaseCommunicationSendRequest": {
+        "properties": {
+          "author": {
+            "type": "string"
+          },
+          "connector_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "type": "object"
+          }
+        },
+        "required": [
+          "content"
+        ],
+        "type": "object"
+      },
+      "CaseCommunicationSyncRequest": {
+        "properties": {
+          "connector_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "CreateCaseRequest": {
+        "properties": {
+          "case_number": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string"
+          },
+          "detected_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "impact": {
+            "type": "string"
+          },
+          "incident_type": {
+            "type": "string"
+          },
+          "occurred_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "pap": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "tlp": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "title"
+        ],
+        "type": "object"
+      },
+      "Error": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "LoginRequest": {
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object"
+      },
+      "LoginResponse": {
+        "properties": {
+          "access_token": {
+            "type": "string"
+          },
+          "access_token_expires_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "refresh_token_expires_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ProxySendRequest": {
+        "properties": {
+          "author": {
+            "type": "string"
+          },
+          "connector_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "type": "object"
+          }
+        },
+        "required": [
+          "connector_id",
+          "content"
+        ],
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "bearerFormat": "JWT",
+        "scheme": "bearer",
+        "type": "http"
+      },
+      "bearerAuth": {
+        "bearerFormat": "JWT",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "REST API for multi-tenant IncidentHub SOC platform.",
+    "title": "IncidentHub API",
+    "version": "1.0.0"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/api/v1/activity/livestream": {
+      "get": {
+        "operationId": "get_api_v1_activity_livestream",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/activity/livestream"
+      }
+    },
+    "/api/v1/admin/api-tokens": {
+      "get": {
+        "operationId": "get_api_v1_admin_api_tokens",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/admin/api-tokens"
+      },
+      "post": {
+        "operationId": "post_api_v1_admin_api_tokens",
+        "responses": {
+          "201": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/admin/api-tokens"
+      }
+    },
+    "/api/v1/admin/api-tokens/{tokenID}": {
+      "delete": {
+        "operationId": "delete_api_v1_admin_api_tokens_tokenID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tokenID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "DELETE /api/v1/admin/api-tokens/{tokenID}"
+      }
+    },
+    "/api/v1/admin/notification-bots": {
+      "get": {
+        "operationId": "get_api_v1_admin_notification_bots",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/admin/notification-bots"
+      },
+      "post": {
+        "operationId": "post_api_v1_admin_notification_bots",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/admin/notification-bots"
+      }
+    },
+    "/api/v1/admin/notification-bots/{botID}": {
+      "delete": {
+        "operationId": "delete_api_v1_admin_notification_bots_botID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "botID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "DELETE /api/v1/admin/notification-bots/{botID}"
+      },
+      "patch": {
+        "operationId": "patch_api_v1_admin_notification_bots_botID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "botID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "PATCH /api/v1/admin/notification-bots/{botID}"
+      }
+    },
+    "/api/v1/admin/notification-settings": {
+      "get": {
+        "operationId": "get_api_v1_admin_notification_settings",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/admin/notification-settings"
+      }
+    },
+    "/api/v1/admin/notification-settings/{userID}": {
+      "put": {
+        "operationId": "put_api_v1_admin_notification_settings_userID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "PUT /api/v1/admin/notification-settings/{userID}"
+      }
+    },
+    "/api/v1/ai/agents/entities/{entityType}/{entityID}": {
+      "get": {
+        "operationId": "get_api_v1_ai_agents_entities_entityType_entityID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "entityType",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "entityID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/ai/agents/entities/{entityType}/{entityID}"
+      }
+    },
+    "/api/v1/ai/agents/ops/events/{eventID}/close": {
+      "post": {
+        "operationId": "post_api_v1_ai_agents_ops_events_eventID_close",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "eventID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/ai/agents/ops/events/{eventID}/close"
+      }
+    },
+    "/api/v1/ai/agents/ops/events/{eventID}/restart": {
+      "post": {
+        "operationId": "post_api_v1_ai_agents_ops_events_eventID_restart",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "eventID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/ai/agents/ops/events/{eventID}/restart"
+      }
+    },
+    "/api/v1/ai/agents/ops/overview": {
+      "get": {
+        "operationId": "get_api_v1_ai_agents_ops_overview",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/ai/agents/ops/overview"
+      }
+    },
+    "/api/v1/ai/agents/ops/workloads/{workloadID}/close": {
+      "post": {
+        "operationId": "post_api_v1_ai_agents_ops_workloads_workloadID_close",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workloadID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/ai/agents/ops/workloads/{workloadID}/close"
+      }
+    },
+    "/api/v1/ai/agents/ops/workloads/{workloadID}/restart": {
+      "post": {
+        "operationId": "post_api_v1_ai_agents_ops_workloads_workloadID_restart",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workloadID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/ai/agents/ops/workloads/{workloadID}/restart"
+      }
+    },
+    "/api/v1/ai/agents/{agentID}/run": {
+      "post": {
+        "operationId": "post_api_v1_ai_agents_agentID_run",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "agentID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/ai/agents/{agentID}/run"
+      }
+    },
+    "/api/v1/ai/agents/{agentID}/runs": {
+      "get": {
+        "operationId": "get_api_v1_ai_agents_agentID_runs",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "agentID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/ai/agents/{agentID}/runs"
+      }
+    },
+    "/api/v1/ai/ask": {
+      "post": {
+        "operationId": "post_api_v1_ai_ask",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/ai/ask"
+      }
+    },
+    "/api/v1/ai/messages": {
+      "get": {
+        "operationId": "get_api_v1_ai_messages",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/ai/messages"
+      }
+    },
+    "/api/v1/ai/session": {
+      "get": {
+        "operationId": "get_api_v1_ai_session",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/ai/session"
+      }
+    },
+    "/api/v1/ai/sessions": {
+      "get": {
+        "operationId": "get_api_v1_ai_sessions",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/ai/sessions"
+      },
+      "post": {
+        "operationId": "post_api_v1_ai_sessions",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/ai/sessions"
+      }
+    },
+    "/api/v1/ai/sessions/reorder": {
+      "patch": {
+        "operationId": "patch_api_v1_ai_sessions_reorder",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "PATCH /api/v1/ai/sessions/reorder"
+      }
+    },
+    "/api/v1/ai/sessions/{sessionID}": {
+      "delete": {
+        "operationId": "delete_api_v1_ai_sessions_sessionID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "sessionID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "DELETE /api/v1/ai/sessions/{sessionID}"
+      }
+    },
+    "/api/v1/alerts": {
+      "get": {
+        "operationId": "get_api_v1_alerts",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/alerts"
+      },
+      "post": {
+        "operationId": "post_api_v1_alerts",
+        "responses": {
+          "201": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/alerts"
+      }
+    },
+    "/api/v1/alerts/bulk/create-case": {
+      "post": {
+        "operationId": "post_api_v1_alerts_bulk_create_case",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/alerts/bulk/create-case"
+      }
+    },
+    "/api/v1/alerts/bulk/link-case": {
+      "post": {
+        "operationId": "post_api_v1_alerts_bulk_link_case",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/alerts/bulk/link-case"
+      }
+    },
+    "/api/v1/alerts/{alertID}": {
+      "delete": {
+        "operationId": "delete_api_v1_alerts_alertID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "alertID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "DELETE /api/v1/alerts/{alertID}"
+      },
+      "get": {
+        "operationId": "get_api_v1_alerts_alertID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "alertID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/alerts/{alertID}"
+      },
+      "patch": {
+        "operationId": "patch_api_v1_alerts_alertID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "alertID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "PATCH /api/v1/alerts/{alertID}"
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "operationId": "post_api_v1_auth_login",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "POST /api/v1/auth/login"
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "operationId": "post_api_v1_auth_logout",
+        "responses": {
+          "204": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/auth/logout"
+      }
+    },
+    "/api/v1/auth/refresh": {
+      "post": {
+        "operationId": "post_api_v1_auth_refresh",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "POST /api/v1/auth/refresh"
+      }
+    },
+    "/api/v1/auth/sessions": {
+      "get": {
+        "operationId": "get_api_v1_auth_sessions",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/auth/sessions"
+      }
+    },
+    "/api/v1/auth/sessions/revoke-others": {
+      "post": {
+        "operationId": "post_api_v1_auth_sessions_revoke_others",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/auth/sessions/revoke-others"
+      }
+    },
+    "/api/v1/case-comments": {
+      "get": {
+        "operationId": "get_api_v1_case_comments",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/case-comments"
+      },
+      "post": {
+        "operationId": "post_api_v1_case_comments",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/case-comments"
+      }
+    },
+    "/api/v1/case-statuses": {
+      "get": {
+        "operationId": "get_api_v1_case_statuses",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/case-statuses"
+      },
+      "put": {
+        "operationId": "put_api_v1_case_statuses",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "PUT /api/v1/case-statuses"
+      }
+    },
+    "/api/v1/cases": {
+      "get": {
+        "operationId": "get_api_v1_cases",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/cases"
+      },
+      "post": {
+        "operationId": "post_api_v1_cases",
+        "responses": {
+          "201": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/cases"
+      }
+    },
+    "/api/v1/cases/summary": {
+      "get": {
+        "operationId": "get_api_v1_cases_summary",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/cases/summary"
+      }
+    },
+    "/api/v1/cases/{caseID}": {
+      "delete": {
+        "operationId": "delete_api_v1_cases_caseID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "DELETE /api/v1/cases/{caseID}"
+      },
+      "get": {
+        "operationId": "get_api_v1_cases_caseID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/cases/{caseID}"
+      },
+      "patch": {
+        "operationId": "patch_api_v1_cases_caseID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "PATCH /api/v1/cases/{caseID}"
+      }
+    },
+    "/api/v1/cases/{caseID}/ai/analyses": {
+      "get": {
+        "operationId": "get_api_v1_cases_caseID_ai_analyses",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/cases/{caseID}/ai/analyses"
+      }
+    },
+    "/api/v1/cases/{caseID}/ai/analyze": {
+      "post": {
+        "operationId": "post_api_v1_cases_caseID_ai_analyze",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/cases/{caseID}/ai/analyze"
+      }
+    },
+    "/api/v1/cases/{caseID}/attachments": {
+      "get": {
+        "operationId": "get_api_v1_cases_caseID_attachments",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/cases/{caseID}/attachments"
+      },
+      "post": {
+        "operationId": "post_api_v1_cases_caseID_attachments",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/cases/{caseID}/attachments"
+      }
+    },
+    "/api/v1/cases/{caseID}/attachments/upload": {
+      "post": {
+        "operationId": "post_api_v1_cases_caseID_attachments_upload",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/cases/{caseID}/attachments/upload"
+      }
+    },
+    "/api/v1/cases/{caseID}/attachments/{attachmentID}/download": {
+      "get": {
+        "operationId": "get_api_v1_cases_caseID_attachments_attachmentID_download",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "attachmentID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/cases/{caseID}/attachments/{attachmentID}/download"
+      }
+    },
+    "/api/v1/cases/{caseID}/communications": {
+      "get": {
+        "operationId": "get_api_v1_cases_caseID_communications",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/cases/{caseID}/communications"
+      },
+      "post": {
+        "operationId": "post_api_v1_cases_caseID_communications",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/cases/{caseID}/communications"
+      }
+    },
+    "/api/v1/cases/{caseID}/communications/{threadID}": {
+      "get": {
+        "operationId": "get_api_v1_cases_caseID_communications_threadID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "threadID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/cases/{caseID}/communications/{threadID}"
+      }
+    },
+    "/api/v1/cases/{caseID}/communications/{threadID}/messages": {
+      "post": {
+        "operationId": "post_api_v1_cases_caseID_communications_threadID_messages",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "threadID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/cases/{caseID}/communications/{threadID}/messages"
+      }
+    },
+    "/api/v1/cases/{caseID}/communications/{threadID}/sync": {
+      "post": {
+        "operationId": "post_api_v1_cases_caseID_communications_threadID_sync",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "threadID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/cases/{caseID}/communications/{threadID}/sync"
+      }
+    },
+    "/api/v1/cases/{caseID}/copy": {
+      "post": {
+        "operationId": "post_api_v1_cases_caseID_copy",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/cases/{caseID}/copy"
+      }
+    },
+    "/api/v1/cases/{caseID}/escalate": {
+      "post": {
+        "operationId": "post_api_v1_cases_caseID_escalate",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/cases/{caseID}/escalate"
+      }
+    },
+    "/api/v1/cases/{caseID}/events": {
+      "get": {
+        "operationId": "get_api_v1_cases_caseID_events",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/cases/{caseID}/events"
+      },
+      "post": {
+        "operationId": "post_api_v1_cases_caseID_events",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/cases/{caseID}/events"
+      }
+    },
+    "/api/v1/cases/{caseID}/observables": {
+      "get": {
+        "operationId": "get_api_v1_cases_caseID_observables",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/cases/{caseID}/observables"
+      },
+      "post": {
+        "operationId": "post_api_v1_cases_caseID_observables",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/cases/{caseID}/observables"
+      }
+    },
+    "/api/v1/cases/{caseID}/observables/{observableID}": {
+      "delete": {
+        "operationId": "delete_api_v1_cases_caseID_observables_observableID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "observableID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "DELETE /api/v1/cases/{caseID}/observables/{observableID}"
+      },
+      "patch": {
+        "operationId": "patch_api_v1_cases_caseID_observables_observableID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "observableID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "PATCH /api/v1/cases/{caseID}/observables/{observableID}"
+      }
+    },
+    "/api/v1/cases/{caseID}/pages": {
+      "get": {
+        "operationId": "get_api_v1_cases_caseID_pages",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/cases/{caseID}/pages"
+      },
+      "post": {
+        "operationId": "post_api_v1_cases_caseID_pages",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/cases/{caseID}/pages"
+      }
+    },
+    "/api/v1/cases/{caseID}/related": {
+      "get": {
+        "operationId": "get_api_v1_cases_caseID_related",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/cases/{caseID}/related"
+      }
+    },
+    "/api/v1/cases/{caseID}/share": {
+      "post": {
+        "operationId": "post_api_v1_cases_caseID_share",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/cases/{caseID}/share"
+      }
+    },
+    "/api/v1/cases/{caseID}/shares": {
+      "get": {
+        "operationId": "get_api_v1_cases_caseID_shares",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "caseID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/cases/{caseID}/shares"
+      }
+    },
+    "/api/v1/catalog/achievements/icon/upload": {
+      "post": {
+        "operationId": "post_api_v1_catalog_achievements_icon_upload",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/catalog/achievements/icon/upload"
+      }
+    },
+    "/api/v1/catalog/{kind}": {
+      "get": {
+        "operationId": "get_api_v1_catalog_kind",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "kind",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/catalog/{kind}"
+      },
+      "post": {
+        "operationId": "post_api_v1_catalog_kind",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "kind",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/catalog/{kind}"
+      }
+    },
+    "/api/v1/catalog/{kind}/{itemID}": {
+      "delete": {
+        "operationId": "delete_api_v1_catalog_kind_itemID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "kind",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "itemID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "DELETE /api/v1/catalog/{kind}/{itemID}"
+      },
+      "patch": {
+        "operationId": "patch_api_v1_catalog_kind_itemID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "kind",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "itemID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "PATCH /api/v1/catalog/{kind}/{itemID}"
+      }
+    },
+    "/api/v1/communications/connectors": {
+      "get": {
+        "operationId": "get_api_v1_communications_connectors",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/communications/connectors"
+      }
+    },
+    "/api/v1/connectors/hub/execute": {
+      "post": {
+        "operationId": "post_api_v1_connectors_hub_execute",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/connectors/hub/execute"
+      }
+    },
+    "/api/v1/connectors/hub/executions": {
+      "get": {
+        "operationId": "get_api_v1_connectors_hub_executions",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/connectors/hub/executions"
+      }
+    },
+    "/api/v1/connectors/inbound": {
+      "get": {
+        "operationId": "get_api_v1_connectors_inbound",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/connectors/inbound"
+      }
+    },
+    "/api/v1/connectors/inbound/run": {
+      "post": {
+        "operationId": "post_api_v1_connectors_inbound_run",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/connectors/inbound/run"
+      }
+    },
+    "/api/v1/connectors/inbound/runs": {
+      "get": {
+        "operationId": "get_api_v1_connectors_inbound_runs",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/connectors/inbound/runs"
+      }
+    },
+    "/api/v1/connectors/inbound/{connectorID}/run": {
+      "post": {
+        "operationId": "post_api_v1_connectors_inbound_connectorID_run",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connectorID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/connectors/inbound/{connectorID}/run"
+      }
+    },
+    "/api/v1/connectors/outbound": {
+      "get": {
+        "operationId": "get_api_v1_connectors_outbound",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/connectors/outbound"
+      }
+    },
+    "/api/v1/dashboard/metrics": {
+      "get": {
+        "operationId": "get_api_v1_dashboard_metrics",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/dashboard/metrics"
+      }
+    },
+    "/api/v1/dashboard/metrics/custom": {
+      "get": {
+        "operationId": "get_api_v1_dashboard_metrics_custom",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/dashboard/metrics/custom"
+      },
+      "post": {
+        "operationId": "post_api_v1_dashboard_metrics_custom",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/dashboard/metrics/custom"
+      }
+    },
+    "/api/v1/dashboard/metrics/custom/{metricID}": {
+      "delete": {
+        "operationId": "delete_api_v1_dashboard_metrics_custom_metricID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "metricID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "DELETE /api/v1/dashboard/metrics/custom/{metricID}"
+      },
+      "patch": {
+        "operationId": "patch_api_v1_dashboard_metrics_custom_metricID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "metricID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "PATCH /api/v1/dashboard/metrics/custom/{metricID}"
+      }
+    },
+    "/api/v1/dashboard/stats": {
+      "get": {
+        "operationId": "get_api_v1_dashboard_stats",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/dashboard/stats"
+      }
+    },
+    "/api/v1/duty/overview": {
+      "get": {
+        "operationId": "get_api_v1_duty_overview",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/duty/overview"
+      }
+    },
+    "/api/v1/forum/posts": {
+      "post": {
+        "operationId": "post_api_v1_forum_posts",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/forum/posts"
+      }
+    },
+    "/api/v1/forum/threads": {
+      "get": {
+        "operationId": "get_api_v1_forum_threads",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/forum/threads"
+      },
+      "post": {
+        "operationId": "post_api_v1_forum_threads",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/forum/threads"
+      }
+    },
+    "/api/v1/forum/threads/{threadID}": {
+      "get": {
+        "operationId": "get_api_v1_forum_threads_threadID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "threadID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/forum/threads/{threadID}"
+      }
+    },
+    "/api/v1/forum/threads/{threadID}/posts/upload": {
+      "post": {
+        "operationId": "post_api_v1_forum_threads_threadID_posts_upload",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "threadID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/forum/threads/{threadID}/posts/upload"
+      }
+    },
+    "/api/v1/forum/threads/{threadID}/proxy/profiles": {
+      "get": {
+        "operationId": "get_api_v1_forum_threads_threadID_proxy_profiles",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "threadID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/forum/threads/{threadID}/proxy/profiles"
+      },
+      "post": {
+        "operationId": "post_api_v1_forum_threads_threadID_proxy_profiles",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "threadID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/forum/threads/{threadID}/proxy/profiles"
+      }
+    },
+    "/api/v1/forum/threads/{threadID}/proxy/profiles/{profileID}": {
+      "delete": {
+        "operationId": "delete_api_v1_forum_threads_threadID_proxy_profiles_profileID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "threadID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "profileID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "DELETE /api/v1/forum/threads/{threadID}/proxy/profiles/{profileID}"
+      }
+    },
+    "/api/v1/forum/threads/{threadID}/proxy/send": {
+      "post": {
+        "operationId": "post_api_v1_forum_threads_threadID_proxy_send",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "threadID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/forum/threads/{threadID}/proxy/send"
+      }
+    },
+    "/api/v1/forum/threads/{threadID}/proxy/sync": {
+      "post": {
+        "operationId": "post_api_v1_forum_threads_threadID_proxy_sync",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "threadID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/forum/threads/{threadID}/proxy/sync"
+      }
+    },
+    "/api/v1/me": {
+      "get": {
+        "operationId": "get_api_v1_me",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/me"
+      }
+    },
+    "/api/v1/me/notification-settings": {
+      "get": {
+        "operationId": "get_api_v1_me_notification_settings",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/me/notification-settings"
+      },
+      "put": {
+        "operationId": "put_api_v1_me_notification_settings",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "PUT /api/v1/me/notification-settings"
+      }
+    },
+    "/api/v1/notification-bots": {
+      "get": {
+        "operationId": "get_api_v1_notification_bots",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/notification-bots"
+      }
+    },
+    "/api/v1/operations/{operationID}": {
+      "get": {
+        "operationId": "get_api_v1_operations_operationID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "operationID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/operations/{operationID}"
+      }
+    },
+    "/api/v1/search": {
+      "get": {
+        "operationId": "get_api_v1_search",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/search"
+      }
+    },
+    "/api/v1/system/health": {
+      "get": {
+        "operationId": "get_api_v1_system_health",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/system/health"
+      }
+    },
+    "/api/v1/system/resources": {
+      "get": {
+        "operationId": "get_api_v1_system_resources",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/system/resources"
+      }
+    },
+    "/api/v1/tasks": {
+      "get": {
+        "operationId": "get_api_v1_tasks",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/tasks"
+      },
+      "post": {
+        "operationId": "post_api_v1_tasks",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/tasks"
+      }
+    },
+    "/api/v1/tasks/{taskID}": {
+      "delete": {
+        "operationId": "delete_api_v1_tasks_taskID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "taskID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "DELETE /api/v1/tasks/{taskID}"
+      },
+      "patch": {
+        "operationId": "patch_api_v1_tasks_taskID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "taskID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "PATCH /api/v1/tasks/{taskID}"
+      }
+    },
+    "/api/v1/tenant-users": {
+      "get": {
+        "operationId": "get_api_v1_tenant_users",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/tenant-users"
+      }
+    },
+    "/api/v1/tenants": {
+      "get": {
+        "operationId": "get_api_v1_tenants",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/tenants"
+      },
+      "post": {
+        "operationId": "post_api_v1_tenants",
+        "responses": {
+          "201": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/tenants"
+      }
+    },
+    "/api/v1/tenants/{tenantID}": {
+      "patch": {
+        "operationId": "patch_api_v1_tenants_tenantID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tenantID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "PATCH /api/v1/tenants/{tenantID}"
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "operationId": "get_api_v1_users",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/users"
+      },
+      "post": {
+        "operationId": "post_api_v1_users",
+        "responses": {
+          "201": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/users"
+      }
+    },
+    "/api/v1/users/{id}": {
+      "delete": {
+        "operationId": "delete_api_v1_users_id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "DELETE /api/v1/users/{id}"
+      },
+      "get": {
+        "operationId": "get_api_v1_users_id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/users/{id}"
+      },
+      "patch": {
+        "operationId": "patch_api_v1_users_id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "PATCH /api/v1/users/{id}"
+      }
+    },
+    "/api/v1/users/{id}/experience-awards": {
+      "post": {
+        "operationId": "post_api_v1_users_id_experience_awards",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/users/{id}/experience-awards"
+      }
+    },
+    "/api/v1/users/{id}/experience-events": {
+      "get": {
+        "operationId": "get_api_v1_users_id_experience_events",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/users/{id}/experience-events"
+      }
+    },
+    "/api/v1/users/{id}/media/{kind}/upload": {
+      "post": {
+        "operationId": "post_api_v1_users_id_media_kind_upload",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "kind",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/users/{id}/media/{kind}/upload"
+      }
+    },
+    "/api/v1/users/{id}/performance": {
+      "get": {
+        "operationId": "get_api_v1_users_id_performance",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/users/{id}/performance"
+      }
+    },
+    "/api/v1/workflows/{workflowID}/run": {
+      "post": {
+        "operationId": "post_api_v1_workflows_workflowID_run",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workflowID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/workflows/{workflowID}/run"
+      }
+    },
+    "/api/v1/workflows/{workflowID}/runs": {
+      "get": {
+        "operationId": "get_api_v1_workflows_workflowID_runs",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workflowID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "GET /api/v1/workflows/{workflowID}/runs"
+      }
+    },
+    "/api/v1/workflows/{workflowID}/test-run": {
+      "post": {
+        "operationId": "post_api_v1_workflows_workflowID_test_run",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workflowID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "POST /api/v1/workflows/{workflowID}/test-run"
+      }
+    },
+    "/dev/swagger": {
+      "get": {
+        "operationId": "get_dev_swagger",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "GET /dev/swagger"
+      }
+    },
+    "/dev/swagger/openapi.json": {
+      "get": {
+        "operationId": "get_dev_swagger_openapi.json",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "GET /dev/swagger/openapi.json"
+      }
+    },
+    "/healthz": {
+      "get": {
+        "operationId": "get_healthz",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "GET /healthz"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}

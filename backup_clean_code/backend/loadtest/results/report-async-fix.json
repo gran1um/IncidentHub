@@ -1,0 +1,537 @@
+{
+  "generated_at_utc": "2026-02-23T19:36:27Z",
+  "base_url": "http://localhost:5173",
+  "tenant_id": "0f2ef7d6-bd84-4300-9e46-6802c363e2df",
+  "step_duration": "5s",
+  "cooldown": "2s",
+  "error_threshold": 0.02,
+  "p95_threshold_ms": 700,
+  "workers": 200,
+  "scenarios": [
+    {
+      "name": "Read Profile",
+      "category": "read",
+      "method": "GET",
+      "path_template": "/api/v1/me",
+      "max_sustainable_rps": 400,
+      "steps": [
+        {
+          "target_rps": 200,
+          "achieved_rps": 199.89,
+          "total_requests": 1000,
+          "successful": 1000,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.605,
+          "p95_latency_ms": 3.314,
+          "p99_latency_ms": 4.942,
+          "avg_latency_ms": 1.8,
+          "min_latency_ms": 0.737,
+          "max_latency_ms": 7.617,
+          "duration_ms": 5002,
+          "status_code_stats": {
+            "200": 1000
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        },
+        {
+          "target_rps": 300,
+          "achieved_rps": 299.88,
+          "total_requests": 1500,
+          "successful": 1500,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.395,
+          "p95_latency_ms": 2.613,
+          "p99_latency_ms": 3.945,
+          "avg_latency_ms": 1.544,
+          "min_latency_ms": 0.716,
+          "max_latency_ms": 6.885,
+          "duration_ms": 5002,
+          "status_code_stats": {
+            "200": 1500
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        },
+        {
+          "target_rps": 400,
+          "achieved_rps": 399.15,
+          "total_requests": 1997,
+          "successful": 1997,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.264,
+          "p95_latency_ms": 2.44,
+          "p99_latency_ms": 3.717,
+          "avg_latency_ms": 1.407,
+          "min_latency_ms": 0.683,
+          "max_latency_ms": 6.047,
+          "duration_ms": 5003,
+          "status_code_stats": {
+            "200": 1997
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        }
+      ]
+    },
+    {
+      "name": "Read Alerts List",
+      "category": "read",
+      "method": "GET",
+      "path_template": "/api/v1/alerts",
+      "max_sustainable_rps": 400,
+      "steps": [
+        {
+          "target_rps": 200,
+          "achieved_rps": 199.91,
+          "total_requests": 1000,
+          "successful": 1000,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.657,
+          "p95_latency_ms": 3,
+          "p99_latency_ms": 4.351,
+          "avg_latency_ms": 1.801,
+          "min_latency_ms": 0.987,
+          "max_latency_ms": 5.939,
+          "duration_ms": 5002,
+          "status_code_stats": {
+            "200": 1000
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        },
+        {
+          "target_rps": 300,
+          "achieved_rps": 299.66,
+          "total_requests": 1499,
+          "successful": 1499,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.571,
+          "p95_latency_ms": 2.694,
+          "p99_latency_ms": 3.577,
+          "avg_latency_ms": 1.683,
+          "min_latency_ms": 0.816,
+          "max_latency_ms": 5.818,
+          "duration_ms": 5002,
+          "status_code_stats": {
+            "200": 1499
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        },
+        {
+          "target_rps": 400,
+          "achieved_rps": 398.61,
+          "total_requests": 1994,
+          "successful": 1994,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.337,
+          "p95_latency_ms": 2.364,
+          "p99_latency_ms": 3.379,
+          "avg_latency_ms": 1.442,
+          "min_latency_ms": 0.738,
+          "max_latency_ms": 4.767,
+          "duration_ms": 5002,
+          "status_code_stats": {
+            "200": 1994
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        }
+      ]
+    },
+    {
+      "name": "Read Cases List",
+      "category": "read",
+      "method": "GET",
+      "path_template": "/api/v1/cases",
+      "max_sustainable_rps": 400,
+      "steps": [
+        {
+          "target_rps": 200,
+          "achieved_rps": 199.7,
+          "total_requests": 999,
+          "successful": 999,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.776,
+          "p95_latency_ms": 3.093,
+          "p99_latency_ms": 4.461,
+          "avg_latency_ms": 1.92,
+          "min_latency_ms": 1.037,
+          "max_latency_ms": 6.664,
+          "duration_ms": 5002,
+          "status_code_stats": {
+            "200": 999
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        },
+        {
+          "target_rps": 300,
+          "achieved_rps": 299.65,
+          "total_requests": 1499,
+          "successful": 1499,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.556,
+          "p95_latency_ms": 2.743,
+          "p99_latency_ms": 3.812,
+          "avg_latency_ms": 1.681,
+          "min_latency_ms": 0.891,
+          "max_latency_ms": 4.994,
+          "duration_ms": 5002,
+          "status_code_stats": {
+            "200": 1499
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        },
+        {
+          "target_rps": 400,
+          "achieved_rps": 399.17,
+          "total_requests": 1996,
+          "successful": 1996,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.42,
+          "p95_latency_ms": 2.647,
+          "p99_latency_ms": 3.675,
+          "avg_latency_ms": 1.556,
+          "min_latency_ms": 0.815,
+          "max_latency_ms": 6.385,
+          "duration_ms": 5000,
+          "status_code_stats": {
+            "200": 1996
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        }
+      ]
+    },
+    {
+      "name": "Read Case Detail",
+      "category": "read",
+      "method": "GET",
+      "path_template": "/api/v1/cases/{fixture_case_id}",
+      "max_sustainable_rps": 400,
+      "steps": [
+        {
+          "target_rps": 200,
+          "achieved_rps": 199.92,
+          "total_requests": 1000,
+          "successful": 1000,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.697,
+          "p95_latency_ms": 3.388,
+          "p99_latency_ms": 4.949,
+          "avg_latency_ms": 1.902,
+          "min_latency_ms": 0.875,
+          "max_latency_ms": 6.412,
+          "duration_ms": 5001,
+          "status_code_stats": {
+            "200": 1000
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        },
+        {
+          "target_rps": 300,
+          "achieved_rps": 299.88,
+          "total_requests": 1500,
+          "successful": 1500,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.339,
+          "p95_latency_ms": 2.577,
+          "p99_latency_ms": 3.498,
+          "avg_latency_ms": 1.477,
+          "min_latency_ms": 0.726,
+          "max_latency_ms": 5.575,
+          "duration_ms": 5002,
+          "status_code_stats": {
+            "200": 1500
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        },
+        {
+          "target_rps": 400,
+          "achieved_rps": 398.62,
+          "total_requests": 1994,
+          "successful": 1994,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.25,
+          "p95_latency_ms": 2.21,
+          "p99_latency_ms": 3.448,
+          "avg_latency_ms": 1.361,
+          "min_latency_ms": 0.721,
+          "max_latency_ms": 5.964,
+          "duration_ms": 5002,
+          "status_code_stats": {
+            "200": 1994
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        }
+      ]
+    },
+    {
+      "name": "Read Search",
+      "category": "read",
+      "method": "GET",
+      "path_template": "/api/v1/search?q=loadtest",
+      "max_sustainable_rps": 400,
+      "steps": [
+        {
+          "target_rps": 200,
+          "achieved_rps": 199.79,
+          "total_requests": 1000,
+          "successful": 1000,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.638,
+          "p95_latency_ms": 380.032,
+          "p99_latency_ms": 530.167,
+          "avg_latency_ms": 35.502,
+          "min_latency_ms": 0.788,
+          "max_latency_ms": 735.358,
+          "duration_ms": 5005,
+          "status_code_stats": {
+            "200": 1000
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        },
+        {
+          "target_rps": 300,
+          "achieved_rps": 299.5,
+          "total_requests": 1498,
+          "successful": 1498,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.334,
+          "p95_latency_ms": 2.807,
+          "p99_latency_ms": 4.055,
+          "avg_latency_ms": 1.488,
+          "min_latency_ms": 0.744,
+          "max_latency_ms": 5.23,
+          "duration_ms": 5001,
+          "status_code_stats": {
+            "200": 1498
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        },
+        {
+          "target_rps": 400,
+          "achieved_rps": 398.54,
+          "total_requests": 1994,
+          "successful": 1994,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 1.26,
+          "p95_latency_ms": 2.33,
+          "p99_latency_ms": 3.8,
+          "avg_latency_ms": 1.39,
+          "min_latency_ms": 0.692,
+          "max_latency_ms": 7.336,
+          "duration_ms": 5003,
+          "status_code_stats": {
+            "200": 1994
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        }
+      ]
+    },
+    {
+      "name": "Write Alert",
+      "category": "write",
+      "method": "POST",
+      "path_template": "/api/v1/alerts",
+      "max_sustainable_rps": 400,
+      "steps": [
+        {
+          "target_rps": 200,
+          "achieved_rps": 199.74,
+          "total_requests": 1000,
+          "successful": 1000,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 7.536,
+          "p95_latency_ms": 10.418,
+          "p99_latency_ms": 11.639,
+          "avg_latency_ms": 6.69,
+          "min_latency_ms": 1.804,
+          "max_latency_ms": 14.888,
+          "duration_ms": 5006,
+          "status_code_stats": {
+            "202": 1000
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        },
+        {
+          "target_rps": 300,
+          "achieved_rps": 299.4,
+          "total_requests": 1499,
+          "successful": 1499,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 7.076,
+          "p95_latency_ms": 9.33,
+          "p99_latency_ms": 11.134,
+          "avg_latency_ms": 6.479,
+          "min_latency_ms": 1.726,
+          "max_latency_ms": 13.218,
+          "duration_ms": 5006,
+          "status_code_stats": {
+            "202": 1499
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        },
+        {
+          "target_rps": 400,
+          "achieved_rps": 397.54,
+          "total_requests": 1990,
+          "successful": 1990,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 5.843,
+          "p95_latency_ms": 9.107,
+          "p99_latency_ms": 10.923,
+          "avg_latency_ms": 5.85,
+          "min_latency_ms": 1.598,
+          "max_latency_ms": 16.308,
+          "duration_ms": 5005,
+          "status_code_stats": {
+            "202": 1990
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        }
+      ]
+    },
+    {
+      "name": "Write Case",
+      "category": "write",
+      "method": "POST",
+      "path_template": "/api/v1/cases",
+      "max_sustainable_rps": 400,
+      "steps": [
+        {
+          "target_rps": 200,
+          "achieved_rps": 199.57,
+          "total_requests": 1000,
+          "successful": 1000,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 7.697,
+          "p95_latency_ms": 9.66,
+          "p99_latency_ms": 11.146,
+          "avg_latency_ms": 6.682,
+          "min_latency_ms": 1.968,
+          "max_latency_ms": 11.916,
+          "duration_ms": 5010,
+          "status_code_stats": {
+            "202": 1000
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        },
+        {
+          "target_rps": 300,
+          "achieved_rps": 298.67,
+          "total_requests": 1496,
+          "successful": 1496,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 7.097,
+          "p95_latency_ms": 9.354,
+          "p99_latency_ms": 11.333,
+          "avg_latency_ms": 6.619,
+          "min_latency_ms": 1.966,
+          "max_latency_ms": 18.988,
+          "duration_ms": 5008,
+          "status_code_stats": {
+            "202": 1496
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        },
+        {
+          "target_rps": 400,
+          "achieved_rps": 397.95,
+          "total_requests": 1991,
+          "successful": 1991,
+          "failed": 0,
+          "success_rate": 1,
+          "error_rate": 0,
+          "p50_latency_ms": 5.81,
+          "p95_latency_ms": 9.032,
+          "p99_latency_ms": 10.613,
+          "avg_latency_ms": 5.915,
+          "min_latency_ms": 1.864,
+          "max_latency_ms": 12.233,
+          "duration_ms": 5003,
+          "status_code_stats": {
+            "202": 1991
+          },
+          "top_errors": {},
+          "passed": true,
+          "fail_reasons": []
+        }
+      ]
+    }
+  ]
+}

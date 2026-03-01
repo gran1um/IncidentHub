@@ -1,0 +1,104 @@
+== 1600 ==
+### Result
+{
+  "width": 1600,
+  "scrollWidth": 1600,
+  "overflowX": 0,
+  "bodyWidth": 1600
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({ width: window.innerWidth, scrollWidth: document.documentElement.scrollWidth, overflowX: document.documentElement.scrollWidth - window.innerWidth, bodyWidth: document.body.scrollWidth })');
+```
+
+== 1440 ==
+### Result
+{
+  "width": 1440,
+  "scrollWidth": 1440,
+  "overflowX": 0,
+  "bodyWidth": 1440
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({ width: window.innerWidth, scrollWidth: document.documentElement.scrollWidth, overflowX: document.documentElement.scrollWidth - window.innerWidth, bodyWidth: document.body.scrollWidth })');
+```
+
+== 1366 ==
+### Result
+{
+  "width": 1366,
+  "scrollWidth": 1366,
+  "overflowX": 0,
+  "bodyWidth": 1366
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({ width: window.innerWidth, scrollWidth: document.documentElement.scrollWidth, overflowX: document.documentElement.scrollWidth - window.innerWidth, bodyWidth: document.body.scrollWidth })');
+```
+
+== 1280 ==
+### Result
+{
+  "width": 1280,
+  "scrollWidth": 1280,
+  "overflowX": 0,
+  "bodyWidth": 1280
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({ width: window.innerWidth, scrollWidth: document.documentElement.scrollWidth, overflowX: document.documentElement.scrollWidth - window.innerWidth, bodyWidth: document.body.scrollWidth })');
+```
+
+== 1200 ==
+### Result
+{
+  "width": 1200,
+  "scrollWidth": 1200,
+  "overflowX": 0,
+  "bodyWidth": 1200
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({ width: window.innerWidth, scrollWidth: document.documentElement.scrollWidth, overflowX: document.documentElement.scrollWidth - window.innerWidth, bodyWidth: document.body.scrollWidth })');
+```
+
+== 1152 ==
+### Result
+{
+  "width": 1152,
+  "scrollWidth": 1152,
+  "overflowX": 0,
+  "bodyWidth": 1152
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({ width: window.innerWidth, scrollWidth: document.documentElement.scrollWidth, overflowX: document.documentElement.scrollWidth - window.innerWidth, bodyWidth: document.body.scrollWidth })');
+```
+
+== 1024 ==
+### Result
+{
+  "width": 1024,
+  "scrollWidth": 1024,
+  "overflowX": 0,
+  "bodyWidth": 1024
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({ width: window.innerWidth, scrollWidth: document.documentElement.scrollWidth, overflowX: document.documentElement.scrollWidth - window.innerWidth, bodyWidth: document.body.scrollWidth })');
+```
+
+== 980 ==
+### Result
+{
+  "width": 980,
+  "scrollWidth": 980,
+  "overflowX": 0,
+  "bodyWidth": 980
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({ width: window.innerWidth, scrollWidth: document.documentElement.scrollWidth, overflowX: document.documentElement.scrollWidth - window.innerWidth, bodyWidth: document.body.scrollWidth })');
+```
+
