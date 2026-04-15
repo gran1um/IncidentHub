@@ -1,0 +1,5 @@
+node_modules/
+.build/
+docusaurus-build/
+.cache/
+docs-generated/
