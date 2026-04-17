@@ -1,0 +1,26 @@
+:root {
+  --ifm-color-primary: #66ff4c;
+  --ifm-color-primary-dark: #52e33b;
+  --ifm-color-primary-darker: #48cc34;
+  --ifm-color-primary-light: #7aff63;
+  --ifm-background-color: #0b0c10;
+  --ifm-navbar-background-color: #13141c;
+  --ifm-card-background-color: #13141c;
+  --ifm-font-color-base: #e5e7eb;
+  --ifm-heading-color: #f9fafb;
+}
+
+html[data-theme='light'] {
+  --ifm-background-color: #ffffff;
+  --ifm-navbar-background-color: #f8fafc;
+  --ifm-card-background-color: #ffffff;
+  --ifm-font-color-base: #1f2937;
+  --ifm-heading-color: #111827;
+}
+
+.incidenthub-swagger-ui {
+  border: 1px solid rgba(102, 255, 76, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+}
