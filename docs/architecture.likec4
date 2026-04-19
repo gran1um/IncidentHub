@@ -1,0 +1,1219 @@
+specification {
+  element person
+  element softwareSystem
+  element container
+  element component
+}
+
+model {
+  platform_admin = person "Platform Administrator" "Global governance, platform policies, tenants and cross-tenant security controls"
+  tenant_admin = person "Tenant Administrator" "Tenant-level configuration, users, statuses, connectors and automation"
+  soc_analyst = person "SOC Analyst" "Triage alerts, investigate cases, run response actions and collaborate in threads"
+  incident_commander = person "Incident Commander" "Oversees major incidents, timelines and coordination status"
+  viewer = person "Viewer" "Read-only visibility to tenant KPIs and incident context"
+  automation_bot = person "Automation Bot" "CI/CD and playbooks calling API endpoints with admin-issued API tokens"
+
+  external_security_sources = softwareSystem "External Security Sources" "SIEM, EDR, IDS, email gateways, cloud security feeds"
+  external_data_sources = softwareSystem "External Data Services" "SQL DBs, object stores, REST feeds, Kafka topics"
+  external_comm_channels = softwareSystem "External Communication Channels" "Telegram, webhook receivers, email-like gateways"
+  identity_provider = softwareSystem "Identity Provider / LDAP" "Central user identity and password policy authority"
+  threat_intel = softwareSystem "Threat Intelligence Feeds" "IOC and reputation context feeds consumed by connectors"
+  ticketing_system = softwareSystem "Ticketing / ITSM" "Optional downstream notifications and escalation tracking"
+
+  incidenthub = softwareSystem "IncidentHub Platform" {
+    frontend = container "Frontend SPA" "React + TypeScript + Vite" "SOC workbench and administration console" {
+      app_shell = component "App Shell + Routing" "Global layout, route guards, session bootstrap, tenant context selection"
+      auth_ui = component "Auth + Session UI" "Login, logout, session state and token refresh handling"
+      dashboard_ui = component "Dashboard UI" "KPI cards, trends, operational health and tenant overview"
+      alerts_ui = component "Alerts UI" "List, filter, triage, bulk actions and case linking"
+      cases_ui = component "Cases UI" "Case listing, creation, ownership and bulk lifecycle actions"
+      case_workspace_ui = component "Case Workspace UI" "Case details, observables, tasks, timeline, pages and attachments"
+      comms_ui = component "Case Communications UI" "External participant threads and message sync in case context"
+      forum_ui = component "Forum UI" "Threaded analyst collaboration with attachments and proxy relay"
+      catalog_ui = component "Catalog + Templates UI" "Catalog entities, statuses, methods and response templates"
+      connectors_ui = component "Connectors UI" "Inbound/outbound connector configuration and manual run controls"
+      ai_ui = component "AI Assistant UI" "Q&A, case analysis prompts, verdict and recommendations rendering"
+      admin_ui = component "Administration UI" "Tenant/user admin, API tokens, XP settings, platform-level controls"
+      profile_ui = component "Profile + Experience UI" "User profile, levels, XP bar, performance and history panels"
+      workflow_studio_ui = component "Workflow Studio UI" "Top-level workflow page, list/detail modes, save/run/test actions"
+      workflow_list_ui = component "Workflow List + Filters UI" "Pagination, search and type filters for analyzer/responder workflows"
+      workflow_canvas_ui = component "Workflow Canvas UI" "Graph board with nodes, edges, drag/drop and entry-node control"
+      workflow_library_ui = component "Workflow Block Library UI" "Dynamic block catalog loaded from folder-based node manifests"
+      workflow_inspector_ui = component "Workflow Inspector UI" "Node config editor and edge conditions panel"
+      workflow_runs_ui = component "Workflow Runs History UI" "Latest run status, duration, errors and retention indicator"
+      api_client = component "Typed API Client + React Query" "HTTP calls, cache invalidation, optimistic updates and retries"
+      i18n_theme = component "I18n + Theme Layer" "Localization dictionaries, theme toggles and UX presentation rules"
+    }
+
+    backend = container "Backend API" "Go + Echo v5" "Auth, RBAC, tenant isolation, SOC domain APIs, connectors and AI orchestration" {
+      router = component "HTTP Router + Endpoint Registry" "Route graph for /api/v1, health, metrics and dev swagger"
+      security_headers = component "Security Headers Middleware" "CSP, frame, content-type and referrer protections"
+      request_metrics = component "Request Metrics Middleware" "Per-route timing, status cardinality and Prometheus counters"
+      error_handler = component "HTTP Error Handler" "Consistent API error mapping and response serialization"
+
+      auth_mw = component "JWT / API Token Auth Middleware" "Parses bearer token, resolves identity (jwt or api_token)"
+      api_token_policy = component "API Token Access Policy Middleware" "Blocks user-account routes and enforces resource scopes"
+      api_scope_engine = component "API Token Scope Engine" "Maps route->resource/action and evaluates token scopes"
+      tenant_resolver = component "Tenant Resolver Middleware" "Resolves X-Tenant-ID and membership for tenant context"
+      rbac_policy = component "RBAC Middleware" "Tenant role checks and platform admin guards per endpoint"
+      login_rate_limiter = component "Login Rate Limiter" "Redis-backed brute-force protection for auth endpoints"
+      api_cache_read = component "API Cache Read Middleware" "Cached responses for eligible GET routes"
+      api_cache_invalidate = component "API Cache Invalidation Middleware" "Version-based invalidation on mutations"
+      audit_pipeline = component "Audit Pipeline" "Structured security-relevant audit entries per action"
+
+      auth_api = component "Auth API" "Login, refresh, logout, /me and session lifecycle operations"
+      session_manager = component "Session Manager" "Session cookie rotation and refresh token lifecycle orchestration"
+      users_api = component "Users API" "User CRUD/profile/password/media and tenant-user listing"
+      tenants_api = component "Tenants API" "Tenant creation/update/listing and governance attributes"
+      api_tokens_api = component "Admin API Tokens API" "Issue/list/revoke tenant-scoped API access tokens"
+      alerts_api = component "Alerts API" "Alert CRUD and bulk bind/create-case operations"
+      cases_api = component "Cases API" "Case CRUD, status resolution and closure rewards"
+      case_status_engine = component "Case Status Engine" "Validates tenant status model and open/closed semantics"
+      case_bulk_engine = component "Case Bulk Engine" "Bulk bind/import from alerts and batch mutation helpers"
+      case_workspace_api = component "Case Workspace API" "Tasks, observables, case events, pages and attachments metadata"
+      attachments_api = component "Media + Attachment Upload API" "Presigned upload/download and metadata persistence"
+      forum_api = component "Forum API" "Thread/post creation and forum attachment posting"
+      comms_api = component "Case Communications API" "Thread creation, message send, sync and transcript retrieval"
+      catalog_api = component "Catalog API" "Templates, statuses, achievements, methods and automation config"
+      connectors_api = component "Connectors API" "Inbound/outbound connector read/config and manual run triggers"
+      workflow_api = component "Workflow Runtime API" "Run/test-run/list-runs endpoints for workflow definitions"
+      ai_api = component "AI API" "Chat session/messages and case analysis endpoints"
+      search_api = component "Search API" "Cross-entity search over alerts, cases and threads"
+      experience_api = component "Experience API" "XP events, manual grants, user performance and progress stats"
+      notifications_api = component "Notification Settings API" "Tenant bot CRUD and per-user delivery preferences"
+      system_api = component "System API" "Health, resources, tenant runtime and diagnostics endpoints"
+
+      async_ops_queue = component "Async Ops Queue (Kafka)" "Queue + consumer loop for async create/delete alerts/cases"
+      notification_delivery_queue = component "Notification Delivery Queue (Kafka)" "Catalog notification enqueue + Kafka consumer with retry/DLQ delivery"
+      inbound_worker = component "Inbound Connector Worker" "Scheduled/manual ingestion from HTTP/SQL/S3/Kafka/Redis"
+      ingestion_scheduler = component "Ingestion Scheduler" "Cron-based trigger planning for inbound connector jobs"
+      source_http_adapter = component "Inbound HTTP Adapter" "Fetch and parse HTTP connector payloads"
+      source_sql_adapter = component "Inbound SQL Adapter" "Query SQL sources and normalize rows"
+      source_s3_adapter = component "Inbound S3 Adapter" "Read object batches from buckets"
+      source_kafka_adapter = component "Inbound Kafka Adapter" "Consume configured topic partitions"
+      source_redis_adapter = component "Inbound Redis Adapter" "Pop list batches and normalize messages"
+      outbound_service = component "Outbound Connector Service" "Driver abstraction for mock/webhook/telegram/kafka/redis"
+      outbound_driver_mock = component "Outbound Driver: Mock" "Deterministic send/poll for local testing"
+      outbound_driver_webhook = component "Outbound Driver: Webhook" "HTTP send and poll endpoint integration"
+      outbound_driver_telegram = component "Outbound Driver: Telegram" "Telegram Bot API send/getUpdates integration"
+      outbound_driver_kafka = component "Outbound Driver: Kafka" "Kafka producer and consumer poll bridge"
+      outbound_driver_redis = component "Outbound Driver: Redis" "Redis list send/poll transport bridge"
+      forum_proxy = component "Forum Proxy Service" "External conversation binding, send/sync state machine"
+      forum_sync_engine = component "Forum Sync Engine" "Cursor-based sync for external thread state"
+      workflow_runtime = component "Workflow Runtime Engine" "Definition traversal engine with node executor dispatch"
+      workflow_definition_engine = component "Workflow Definition Normalizer" "Parses/normalizes graph JSON (nodes/edges/entryNodeId)"
+      workflow_node_registry = component "Workflow Node Registry" "Built-in node executor registration and dispatch map"
+      workflow_node_trigger = component "Workflow Node: Trigger" "Start node, event marker propagation"
+      workflow_node_webhook_trigger = component "Workflow Node: Webhook Trigger" "Poll outbound webhook connector for new messages"
+      workflow_node_kafka_trigger = component "Workflow Node: Kafka Trigger" "Poll outbound kafka connector for new messages"
+      workflow_node_condition = component "Workflow Node: Condition" "Boolean expression branch selection"
+      workflow_node_switch = component "Workflow Node: Switch" "Multi-branch value matching with default route"
+      workflow_node_delay = component "Workflow Node: Delay" "Wait for configured seconds before continuing"
+      workflow_node_scheduler = component "Workflow Node: Scheduler" "Delay/until-time scheduling with max wait cap"
+      workflow_node_transform = component "Workflow Node: Transform" "Template/JSON payload remapping"
+      workflow_node_aggregate = component "Workflow Node: Aggregate" "Array aggregation (count/sum/avg/min/max/concat/unique)"
+      workflow_node_analyzer = component "Workflow Node: Analyzer Action" "Connector action execution for analyzer workflows"
+      workflow_node_responder = component "Workflow Node: Responder Action" "Connector action execution for responder workflows"
+      workflow_node_redis = component "Workflow Node: Redis" "Direct Redis key/list operations"
+      workflow_node_postgres = component "Workflow Node: Postgres Query" "Read-only SQL query execution"
+      workflow_node_cassandra = component "Workflow Node: Cassandra Query" "HTTP Cassandra gateway query execution"
+      workflow_node_telegram = component "Workflow Node: Telegram Send" "Direct telegram message send via outbound connector"
+      workflow_node_python = component "Workflow Node: Python Code" "Sandboxed python3 execution with input/payload scope"
+      workflow_node_s3 = component "Workflow Node: S3 Object" "Put/get/presign object operations"
+      ai_service = component "AI Service" "Retrieval + prompt assembly + model execution + persistence"
+      ai_retriever = component "AI Retrieval Engine" "Tenant-aware retrieval against search corpus"
+      ai_prompt_builder = component "AI Prompt Builder" "Prompt context assembly and truncation strategy"
+      ai_response_parser = component "AI Response Parser" "Normalizes structured analysis payloads"
+      search_fallback_engine = component "Search Fallback Engine" "Fallback DB list+filter path when search index misses"
+      xp_service = component "Experience Reward Service" "XP awarding logic for achievements, closures and manual grants"
+      media_service = component "Artifact Storage Service" "S3 abstraction for user media and case attachments"
+      migration_runner = component "Migration Runner" "Applies SQL migrations with advisory lock and schema tracking"
+      bootstrap_seed = component "Bootstrap Seed Service" "Creates platform admin and starter entities"
+
+      user_repo = component "User Repository" "users and profile-related storage operations"
+      tenant_repo = component "Tenant Repository" "tenants persistence and platform-level tenant operations"
+      membership_repo = component "Membership Repository" "tenant memberships and role membership checks"
+      refresh_repo = component "Refresh Token Repository" "refresh token create/revoke/list/session checks"
+      api_token_repo = component "API Access Token Repository" "api_access_tokens create/list/revoke/lookup"
+      alert_repo = component "Alert Repository" "alerts CRUD and bulk bind to case"
+      case_repo = component "Case Repository" "cases CRUD and case creation with linked alerts"
+      task_repo = component "Task Repository" "case tasks lifecycle persistence"
+      observable_repo = component "Observable Repository" "observables CRUD and verdict/source metadata"
+      case_event_repo = component "Case Event Repository" "case event timeline entries"
+      case_page_repo = component "Case Page Repository" "long-form case pages and notes"
+      attachment_repo = component "Attachment Repository" "case attachment metadata and lookup"
+      catalog_repo = component "Catalog Repository" "catalog_items generalized storage"
+      connector_repo = component "Connector State Repository" "connector ingest states and run history"
+      workflow_run_repo = component "Workflow Run Repository" "workflow_runs create/finish/list/retention operations"
+      notification_bot_repo = component "Notification Bot Repository" "telegram_notification_bots CRUD and tenant lookups"
+      notification_settings_repo = component "Notification Settings Repository" "user_notification_settings get/upsert/delete"
+      forum_binding_repo = component "Forum Binding Repository" "forum_external_bindings and recipient aliases"
+      ai_repo = component "AI Repository" "ai_chat_sessions, ai_chat_messages, case_ai_analyses"
+      experience_repo = component "Experience Repository" "user_experience_events and related aggregates"
+      audit_repo = component "Audit Repository" "append-only audit event persistence"
+      system_repo = component "System Repository" "tenant/system stats and operational counters"
+    }
+
+    frontend_runtime_packages = container "Frontend Runtime Packages" "TypeScript/React source layout" "Package-level map of runtime-significant frontend folders used by the SPA" {
+      fe_src_pages = component "frontend/src/pages - Route screens and workspace pages" "Top-level screens, page composition and route-focused UX"
+      fe_src_components = component "frontend/src/components - Reusable UI and layout primitives" "Shared visual building blocks, layout shells and cross-page widgets"
+      fe_src_lib_api = component "frontend/src/lib/api - Typed API hooks and HTTP integration" "React Query hooks, fetch orchestration and backend contract adapters"
+      fe_src_lib_shared = component "frontend/src/lib - Shared runtime state, i18n, theme and utilities" "Cross-cutting client runtime helpers, stores and presentation utilities"
+      fe_features_workflow_studio = component "frontend/src/features/workflow-studio - Workflow editor feature modules" "Canvas runtime, block registry and workflow-specific editor behavior"
+      fe_features_connectors = component "frontend/src/features/connectors - Connector feature modules" "Connector-specific interaction flows and supporting UX helpers"
+      fe_src_hooks = component "frontend/src/hooks - Shared hooks and interaction state" "Reusable hooks for time, toast, loading, mobile and local UI behavior"
+    }
+
+    backend_runtime_packages = container "Backend Runtime Packages" "Go source layout" "Package-level map of runtime-significant backend packages used by API, workers and services" {
+      be_cmd_api = component "backend/cmd/api - Process bootstrap and dependency wiring" "Application entrypoint, dependency assembly and background worker startup"
+      be_internal_config = component "backend/internal/config - Environment configuration and settings" "Runtime config parsing, defaults and application settings contracts"
+      be_internal_database = component "backend/internal/database - DB init and migration lifecycle" "Postgres pool setup, migration execution and database runtime helpers"
+      be_internal_bootstrap = component "backend/internal/bootstrap - Startup bootstrap and seed flows" "Initial platform admin creation and runtime bootstrap orchestration"
+      be_internal_api = component "backend/internal/api - HTTP handlers and transport contracts" "Route handlers, request/response models and operational endpoint orchestration"
+      be_internal_middleware = component "backend/internal/middleware - Auth, tenant, RBAC and cache middleware" "Request pipeline for auth, access control, tenancy, cache and security policies"
+      be_internal_auth = component "backend/internal/auth - JWT and LDAP authentication services" "Token issuance/validation and LDAP-backed identity verification"
+      be_internal_repository = component "backend/internal/repository - Persistence layer and data access" "Tenant-scoped repositories for domain entities, sessions, audits and runtime state"
+      be_internal_cache = component "backend/internal/cache - Redis cache and rate-limit adapters" "Distributed cache access, version counters and login throttling primitives"
+      be_connectors_inbound = component "backend/internal/connectors/inbound - Ingestion workers and source adapters" "Inbound connectors, scheduled/manual workers and source-specific ingestion paths"
+      be_connectors_outbound = component "backend/internal/connectors/outbound - Delivery drivers and transport service" "Outbound send/poll drivers and connector delivery orchestration"
+      be_internal_forumproxy = component "backend/internal/forumproxy - External thread proxy and sync" "Conversation proxy state machine, bindings and synchronization logic"
+      be_internal_workflow = component "backend/internal/workflow - Workflow runtime and node execution" "Definition normalization, node dispatch and runtime execution engine"
+      be_internal_ai = component "backend/internal/ai - AI orchestration and retrieval services" "Prompt assembly, retrieval, inference orchestration and response normalization"
+      be_internal_search = component "backend/internal/search - Search integration services" "Elasticsearch integration and search-related adapters"
+      be_internal_storage = component "backend/internal/storage - Artifact storage abstraction" "S3/MinIO storage adapters for media and binary artifacts"
+      be_internal_metrics = component "backend/internal/metrics - Prometheus metrics and counters" "Operational metrics collection, counters, gauges and scrape surface"
+      be_internal_tracing = component "backend/internal/tracing - OpenTelemetry tracing integration" "Trace initialization, span helpers and telemetry export wiring"
+    }
+
+    postgres = container "PostgreSQL" "PostgreSQL 18 (17/18 compatible)" "Primary source of truth for domain entities and auth/session state" {
+      pg_auth = component "Auth Tables" "users, refresh_tokens, api_access_tokens"
+      pg_tenant = component "Tenant Tables" "tenants, tenant_memberships"
+      pg_incidents = component "Incident Core Tables" "alerts, cases, tasks, observables"
+      pg_workspace = component "Workspace Tables" "case_events, case_pages, case_attachments"
+      pg_catalog = component "Catalog Tables" "catalog_items, case_statuses"
+      pg_connectors = component "Connector Tables" "connector_ingest_state, inbound_connector_runs, forum bindings"
+      pg_workflows = component "Workflow Tables" "workflow_runs and workflow graph definitions stored in catalog_items"
+      pg_notifications = component "Notification Tables" "telegram_notification_bots and user_notification_settings"
+      pg_ai = component "AI Tables" "ai_chat_sessions, ai_chat_messages, case_ai_analyses"
+      pg_experience = component "Experience Tables" "user_experience_events, user_achievements, reward config"
+      pg_audit = component "Audit Tables" "audit_logs"
+      pg_migrations = component "Schema Tables" "schema_migrations and bootstrap markers"
+    }
+
+    redis = container "Redis" "Redis 7" "Rate limits, API cache entries and cache version counters" {
+      redis_rate_limit = component "Rate Limit Keys" "Per-IP/login rolling windows"
+      redis_api_cache = component "API Cache Entries" "Serialized response payload cache"
+      redis_cache_versions = component "Cache Version Keys" "Versioned invalidation markers by route/entity"
+    }
+
+    elastic = container "Elasticsearch" "Elasticsearch 8" "Search index and retrieval context for AI" {
+      es_alerts = component "Alerts Index" "Search corpus for alerts"
+      es_cases = component "Cases Index" "Search corpus for case entities"
+      es_observables = component "Observables Index" "Search corpus for observables and indicators"
+      es_forum = component "Forum Index" "Search corpus for discussion threads"
+    }
+
+    s3 = container "S3 Storage" "MinIO/AWS S3" "Attachment and media object payloads" {
+      s3_user_media = component "User Media Objects" "Avatar and cover assets"
+      s3_case_artifacts = component "Case Artifact Objects" "Uploaded binary evidence and files"
+      s3_presigned = component "Presigned URL Contract" "Upload/download capability exchange"
+    }
+
+    kafka = container "Kafka" "Kafka (KRaft)" "Connector transport and async operation queue" {
+      kafka_async_ops = component "Async Ops Topic" "Queued alert/case create-delete operations"
+      kafka_inbound = component "Inbound Connector Topics" "External stream source subscriptions"
+      kafka_outbound = component "Outbound Connector Topics" "Connector delivery streams"
+      kafka_notifications = component "Notifications Topic" "User notification delivery queue for telegram and other channels"
+    }
+
+    ai_model = container "AI Model Runtime" "Ollama + llama3.2:3b" "Model serving for AI assistant and case analysis" {
+      ai_inference = component "Inference Endpoint" "Model prompt execution and token generation"
+      ai_model_registry = component "Model Registry" "Loaded model metadata and lifecycle"
+    }
+
+    otel = container "OTel Collector" "OpenTelemetry Collector" "Trace ingestion/export pipeline" {
+      otel_traces = component "Trace Pipeline" "Receives and forwards application traces"
+      otel_exporters = component "Exporter Pipeline" "Exports telemetry to backends"
+    }
+
+    prometheus = container "Prometheus" "Prometheus" "Metrics scraping and query storage" {
+      prom_scrape = component "Scrape Jobs" "Polling backend metrics endpoint"
+      prom_tsdb = component "TSDB" "Time-series storage for metrics"
+    }
+
+    grafana = container "Grafana" "Grafana" "Dashboards and operational visualizations" {
+      grafana_dashboards = component "Operational Dashboards" "SOC and platform SLO views"
+      grafana_alerting = component "Alert Rules" "Threshold and anomaly notifications"
+    }
+  }
+
+  platform_admin -> incidenthub.frontend.admin_ui "Platform and tenant governance workflows"
+  platform_admin -> incidenthub.frontend.dashboard_ui "Cross-tenant system visibility"
+  tenant_admin -> incidenthub.frontend.admin_ui "Tenant-level administration and connector configuration"
+  tenant_admin -> incidenthub.frontend.catalog_ui "Statuses, templates and automation policies"
+  soc_analyst -> incidenthub.frontend.alerts_ui "Alert triage and prioritization"
+  soc_analyst -> incidenthub.frontend.cases_ui "Case lifecycle and ownership actions"
+  soc_analyst -> incidenthub.frontend.case_workspace_ui "Deep investigation activities"
+  soc_analyst -> incidenthub.frontend.comms_ui "External participant communication in incidents"
+  soc_analyst -> incidenthub.frontend.ai_ui "AI-assisted analysis and decision support"
+  soc_analyst -> incidenthub.frontend.workflow_studio_ui "Design/run analyzer and responder workflows"
+  incident_commander -> incidenthub.frontend.dashboard_ui "Incident posture and trend oversight"
+  incident_commander -> incidenthub.frontend.case_workspace_ui "Major incident coordination"
+  viewer -> incidenthub.frontend.dashboard_ui "Read-only dashboards"
+  viewer -> incidenthub.frontend.cases_ui "Read-only case details"
+  automation_bot -> incidenthub.backend.router "Automated API usage via API tokens"
+
+  platform_admin -> incidenthub.frontend_runtime_packages.fe_src_pages "Platform and cross-tenant administration screens"
+  tenant_admin -> incidenthub.frontend_runtime_packages.fe_src_pages "Tenant administration and configuration screens"
+  soc_analyst -> incidenthub.frontend_runtime_packages.fe_src_pages "Operational workbench and investigation screens"
+  incident_commander -> incidenthub.frontend_runtime_packages.fe_src_pages "Incident overview and coordination screens"
+  viewer -> incidenthub.frontend_runtime_packages.fe_src_pages "Read-only dashboards and case views"
+  automation_bot -> incidenthub.backend_runtime_packages.be_internal_api "Automated API calls with issued access tokens"
+
+  incidenthub.frontend_runtime_packages.fe_src_pages -> incidenthub.frontend_runtime_packages.fe_src_components "Composes page layouts and reusable UI primitives"
+  incidenthub.frontend_runtime_packages.fe_src_pages -> incidenthub.frontend_runtime_packages.fe_src_lib_api "Loads and mutates backend data"
+  incidenthub.frontend_runtime_packages.fe_src_pages -> incidenthub.frontend_runtime_packages.fe_src_lib_shared "Uses shared state, routing, i18n and utilities"
+  incidenthub.frontend_runtime_packages.fe_src_pages -> incidenthub.frontend_runtime_packages.fe_src_hooks "Uses page-level hooks and local interaction state"
+  incidenthub.frontend_runtime_packages.fe_src_components -> incidenthub.frontend_runtime_packages.fe_src_lib_shared "Uses shared UI helpers, theme and runtime utilities"
+  incidenthub.frontend_runtime_packages.fe_features_workflow_studio -> incidenthub.frontend_runtime_packages.fe_src_components "Builds workflow canvas and editor UI"
+  incidenthub.frontend_runtime_packages.fe_features_workflow_studio -> incidenthub.frontend_runtime_packages.fe_src_lib_api "Persists workflow definitions and run state"
+  incidenthub.frontend_runtime_packages.fe_features_workflow_studio -> incidenthub.frontend_runtime_packages.fe_src_lib_shared "Uses shared state, routing and utilities"
+  incidenthub.frontend_runtime_packages.fe_features_connectors -> incidenthub.frontend_runtime_packages.fe_src_components "Builds connector management interactions"
+  incidenthub.frontend_runtime_packages.fe_features_connectors -> incidenthub.frontend_runtime_packages.fe_src_lib_api "Reads and mutates connector configuration"
+  incidenthub.frontend_runtime_packages.fe_features_connectors -> incidenthub.frontend_runtime_packages.fe_src_lib_shared "Uses shared runtime helpers and stores"
+  incidenthub.frontend_runtime_packages.fe_src_hooks -> incidenthub.frontend_runtime_packages.fe_src_lib_shared "Composes shared runtime state and utility logic"
+  incidenthub.frontend_runtime_packages.fe_src_lib_api -> incidenthub.backend_runtime_packages.be_internal_api "REST API calls over bearer auth and tenant context"
+
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_internal_config "Loads runtime configuration"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_internal_database "Creates DB pools and migration lifecycle"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_internal_bootstrap "Runs startup bootstrap flows"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_internal_api "Registers HTTP server and handlers"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_internal_auth "Builds JWT and LDAP auth services"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_internal_repository "Wires repositories"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_internal_cache "Connects Redis-backed cache and limits"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_connectors_inbound "Starts ingestion workers"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_connectors_outbound "Starts outbound transport services"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_internal_forumproxy "Wires forum proxy"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_internal_workflow "Wires workflow runtime"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_internal_ai "Wires AI services"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_internal_search "Configures search integration"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_internal_storage "Configures artifact storage"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_internal_metrics "Registers metrics exporter"
+  incidenthub.backend_runtime_packages.be_cmd_api -> incidenthub.backend_runtime_packages.be_internal_tracing "Initializes trace pipeline"
+
+  incidenthub.backend_runtime_packages.be_internal_database -> incidenthub.postgres "Initializes pools and applies migrations"
+  incidenthub.backend_runtime_packages.be_internal_bootstrap -> incidenthub.backend_runtime_packages.be_internal_repository "Seeds default data and platform admin state"
+  incidenthub.backend_runtime_packages.be_internal_api -> incidenthub.backend_runtime_packages.be_internal_middleware "Builds auth, tenant and access pipeline"
+  incidenthub.backend_runtime_packages.be_internal_api -> incidenthub.backend_runtime_packages.be_internal_auth "Uses JWT and LDAP auth services"
+  incidenthub.backend_runtime_packages.be_internal_api -> incidenthub.backend_runtime_packages.be_internal_repository "Reads and mutates domain state"
+  incidenthub.backend_runtime_packages.be_internal_api -> incidenthub.backend_runtime_packages.be_internal_ai "Runs AI chat and analysis flows"
+  incidenthub.backend_runtime_packages.be_internal_api -> incidenthub.backend_runtime_packages.be_internal_workflow "Runs workflow endpoints and node execution"
+  incidenthub.backend_runtime_packages.be_internal_api -> incidenthub.backend_runtime_packages.be_internal_forumproxy "Sends and syncs external thread activity"
+  incidenthub.backend_runtime_packages.be_internal_api -> incidenthub.backend_runtime_packages.be_connectors_inbound "Triggers ingestion and reads run state"
+  incidenthub.backend_runtime_packages.be_internal_api -> incidenthub.backend_runtime_packages.be_connectors_outbound "Validates delivery and transport paths"
+  incidenthub.backend_runtime_packages.be_internal_api -> incidenthub.backend_runtime_packages.be_internal_storage "Presigns uploads and artifact access"
+  incidenthub.backend_runtime_packages.be_internal_api -> incidenthub.backend_runtime_packages.be_internal_search "Searches indexed entities"
+  incidenthub.backend_runtime_packages.be_internal_api -> incidenthub.backend_runtime_packages.be_internal_metrics "Exposes runtime counters and health metrics"
+  incidenthub.backend_runtime_packages.be_internal_api -> incidenthub.backend_runtime_packages.be_internal_tracing "Emits request spans and operational traces"
+  incidenthub.backend_runtime_packages.be_internal_middleware -> incidenthub.backend_runtime_packages.be_internal_auth "Resolves identities and token state"
+  incidenthub.backend_runtime_packages.be_internal_middleware -> incidenthub.backend_runtime_packages.be_internal_repository "Loads memberships, tokens and policy data"
+  incidenthub.backend_runtime_packages.be_internal_middleware -> incidenthub.backend_runtime_packages.be_internal_cache "Uses Redis-backed rate limit and cache state"
+  incidenthub.backend_runtime_packages.be_internal_auth -> identity_provider "Validates LDAP-enabled users"
+
+  incidenthub.backend_runtime_packages.be_internal_repository -> incidenthub.postgres "Primary source of truth for runtime entities"
+  incidenthub.backend_runtime_packages.be_internal_cache -> incidenthub.redis "Cache entries, invalidation versions and rate limits"
+
+  incidenthub.backend_runtime_packages.be_connectors_inbound -> external_security_sources "Pulls telemetry from security tools"
+  incidenthub.backend_runtime_packages.be_connectors_inbound -> external_data_sources "Pulls data from SQL/object/topic sources"
+  incidenthub.backend_runtime_packages.be_connectors_inbound -> threat_intel "Consumes enrichment inputs"
+  incidenthub.backend_runtime_packages.be_connectors_inbound -> incidenthub.kafka "Consumes topic-based inbound streams"
+  incidenthub.backend_runtime_packages.be_connectors_inbound -> incidenthub.redis "Consumes Redis-backed queues where configured"
+  incidenthub.backend_runtime_packages.be_connectors_inbound -> incidenthub.backend_runtime_packages.be_internal_repository "Persists run state, cursors and ingested alerts"
+  incidenthub.backend_runtime_packages.be_connectors_inbound -> incidenthub.backend_runtime_packages.be_internal_search "Indexes ingested entities for retrieval"
+
+  incidenthub.backend_runtime_packages.be_connectors_outbound -> external_comm_channels "Sends and polls delivery channels"
+  incidenthub.backend_runtime_packages.be_connectors_outbound -> ticketing_system "Pushes downstream escalations when configured"
+  incidenthub.backend_runtime_packages.be_connectors_outbound -> incidenthub.kafka "Publishes and polls connector transport topics"
+  incidenthub.backend_runtime_packages.be_connectors_outbound -> incidenthub.redis "Publishes and polls Redis transport queues"
+  incidenthub.backend_runtime_packages.be_connectors_outbound -> incidenthub.backend_runtime_packages.be_internal_repository "Loads connector config and notification state"
+
+  incidenthub.backend_runtime_packages.be_internal_forumproxy -> incidenthub.backend_runtime_packages.be_connectors_outbound "Uses outbound drivers for send and sync"
+  incidenthub.backend_runtime_packages.be_internal_forumproxy -> incidenthub.backend_runtime_packages.be_internal_repository "Persists thread bindings and message state"
+
+  incidenthub.backend_runtime_packages.be_internal_workflow -> incidenthub.backend_runtime_packages.be_connectors_outbound "Executes connector-backed action nodes"
+  incidenthub.backend_runtime_packages.be_internal_workflow -> incidenthub.backend_runtime_packages.be_internal_repository "Loads workflow definitions and run history"
+  incidenthub.backend_runtime_packages.be_internal_workflow -> incidenthub.backend_runtime_packages.be_internal_cache "Executes Redis-backed workflow nodes"
+  incidenthub.backend_runtime_packages.be_internal_workflow -> incidenthub.backend_runtime_packages.be_internal_storage "Executes S3-backed workflow nodes"
+  incidenthub.backend_runtime_packages.be_internal_workflow -> incidenthub.kafka "Polls or emits workflow-related stream events"
+
+  incidenthub.backend_runtime_packages.be_internal_ai -> incidenthub.backend_runtime_packages.be_internal_repository "Persists chat sessions and analyses"
+  incidenthub.backend_runtime_packages.be_internal_ai -> incidenthub.backend_runtime_packages.be_internal_search "Retrieves context for prompts"
+  incidenthub.backend_runtime_packages.be_internal_ai -> incidenthub.ai_model "Executes model inference"
+
+  incidenthub.backend_runtime_packages.be_internal_search -> incidenthub.elastic "Indexes and queries search corpus"
+  incidenthub.backend_runtime_packages.be_internal_storage -> incidenthub.s3 "Stores artifacts and media objects"
+  incidenthub.backend_runtime_packages.be_internal_metrics -> incidenthub.prometheus "Exposes scrapeable metrics for collection"
+  incidenthub.backend_runtime_packages.be_internal_tracing -> incidenthub.otel "Exports application traces"
+
+  incidenthub.frontend.app_shell -> incidenthub.frontend.auth_ui "Route guard and authenticated session checks"
+  incidenthub.frontend.app_shell -> incidenthub.frontend.i18n_theme "Localization and visual theme context"
+  incidenthub.frontend.dashboard_ui -> incidenthub.frontend.api_client "Load dashboard metrics and trends"
+  incidenthub.frontend.alerts_ui -> incidenthub.frontend.api_client "Alert list/search/bulk operations"
+  incidenthub.frontend.cases_ui -> incidenthub.frontend.api_client "Case list/create/update/delete operations"
+  incidenthub.frontend.case_workspace_ui -> incidenthub.frontend.api_client "Tasks/observables/events/pages/attachments calls"
+  incidenthub.frontend.comms_ui -> incidenthub.frontend.api_client "Thread create/send/sync calls"
+  incidenthub.frontend.forum_ui -> incidenthub.frontend.api_client "Forum thread/post operations"
+  incidenthub.frontend.catalog_ui -> incidenthub.frontend.api_client "Catalog management calls"
+  incidenthub.frontend.connectors_ui -> incidenthub.frontend.api_client "Connector state and trigger calls"
+  incidenthub.frontend.ai_ui -> incidenthub.frontend.api_client "AI ask/analyze requests"
+  incidenthub.frontend.profile_ui -> incidenthub.frontend.api_client "Profile, XP and performance requests"
+  incidenthub.frontend.admin_ui -> incidenthub.frontend.api_client "Tenant/users/api-tokens/admin actions"
+  incidenthub.frontend.workflow_studio_ui -> incidenthub.frontend.workflow_list_ui "Browse analyzer/responder workflow catalog"
+  incidenthub.frontend.workflow_studio_ui -> incidenthub.frontend.workflow_canvas_ui "Construct workflow graph"
+  incidenthub.frontend.workflow_studio_ui -> incidenthub.frontend.workflow_library_ui "Open block library"
+  incidenthub.frontend.workflow_studio_ui -> incidenthub.frontend.workflow_inspector_ui "Edit node configs and edge labels"
+  incidenthub.frontend.workflow_studio_ui -> incidenthub.frontend.workflow_runs_ui "Inspect latest run history"
+  incidenthub.frontend.workflow_studio_ui -> incidenthub.frontend.api_client "Save/run/test-run workflows"
+  incidenthub.frontend.api_client -> incidenthub.backend.router "REST API (JWT/API token Bearer + X-Tenant-ID)"
+
+  incidenthub.backend.router -> incidenthub.backend.security_headers "Apply response protection headers"
+  incidenthub.backend.router -> incidenthub.backend.request_metrics "Record request stats"
+  incidenthub.backend.router -> incidenthub.backend.error_handler "Normalize error output"
+  incidenthub.backend.router -> incidenthub.backend.auth_mw "Authenticate requests"
+  incidenthub.backend.auth_mw -> incidenthub.backend.api_token_policy "Enforce API token access boundaries"
+  incidenthub.backend.api_token_policy -> incidenthub.backend.api_scope_engine "Resolve route scope requirements"
+  incidenthub.backend.auth_mw -> incidenthub.backend.tenant_resolver "Resolve tenant context"
+  incidenthub.backend.tenant_resolver -> incidenthub.backend.rbac_policy "Enforce tenant role requirements"
+  incidenthub.backend.auth_api -> incidenthub.backend.login_rate_limiter "Rate limit login attempts"
+  incidenthub.backend.router -> incidenthub.backend.api_cache_read "Serve cached GET responses"
+  incidenthub.backend.router -> incidenthub.backend.api_cache_invalidate "Invalidate cache after writes"
+  incidenthub.backend.router -> incidenthub.backend.notifications_api "Route /notification-bots and /me/notification-settings endpoints"
+  incidenthub.backend.router -> incidenthub.backend.workflow_api "Route /workflows/:workflowID/(run|test-run|runs) endpoints"
+  incidenthub.backend.audit_pipeline -> incidenthub.backend.audit_repo "Persist audit events"
+
+  incidenthub.backend.auth_api -> incidenthub.backend.user_repo "Load user credentials/profile"
+  incidenthub.backend.auth_api -> incidenthub.backend.membership_repo "Resolve memberships for identity"
+  incidenthub.backend.auth_api -> incidenthub.backend.refresh_repo "Create/revoke refresh sessions"
+  incidenthub.backend.auth_api -> incidenthub.backend.session_manager "Rotate cookies and refresh lifecycle"
+  incidenthub.backend.auth_api -> identity_provider "LDAP credential verification for LDAP-enabled users"
+
+  incidenthub.backend.users_api -> incidenthub.backend.user_repo "CRUD/profile/password operations"
+  incidenthub.backend.users_api -> incidenthub.backend.membership_repo "Tenant membership checks"
+  incidenthub.backend.users_api -> incidenthub.backend.media_service "Avatar/cover upload flow"
+  incidenthub.backend.users_api -> incidenthub.backend.xp_service "User XP and performance fetch"
+  incidenthub.backend.users_api -> incidenthub.backend.audit_pipeline "Audit user operations"
+
+  incidenthub.backend.tenants_api -> incidenthub.backend.tenant_repo "Tenant CRUD and attributes"
+  incidenthub.backend.tenants_api -> incidenthub.backend.membership_repo "Access checks and tenant-user views"
+  incidenthub.backend.tenants_api -> incidenthub.backend.audit_pipeline "Audit tenant operations"
+
+  incidenthub.backend.api_tokens_api -> incidenthub.backend.api_token_repo "Issue/list/revoke tokens"
+  incidenthub.backend.api_tokens_api -> incidenthub.backend.audit_pipeline "Audit token issuance/revocation"
+
+  incidenthub.backend.alerts_api -> incidenthub.backend.alert_repo "Alert CRUD and linking"
+  incidenthub.backend.alerts_api -> incidenthub.backend.case_bulk_engine "Bulk bind/import orchestration"
+  incidenthub.backend.alerts_api -> incidenthub.backend.case_repo "Bulk case creation from alerts"
+  incidenthub.backend.alerts_api -> incidenthub.backend.case_event_repo "Case timeline entries for bulk import"
+  incidenthub.backend.alerts_api -> incidenthub.backend.async_ops_queue "Queue async create/delete operations"
+  incidenthub.backend.alerts_api -> incidenthub.backend.audit_pipeline "Audit alert mutations"
+  incidenthub.backend.alerts_api -> incidenthub.elastic "Index alert search documents"
+
+  incidenthub.backend.cases_api -> incidenthub.backend.case_repo "Case CRUD and lifecycle operations"
+  incidenthub.backend.cases_api -> incidenthub.backend.case_status_engine "Validate status transitions and closure semantics"
+  incidenthub.backend.cases_api -> incidenthub.backend.case_bulk_engine "Bulk and linked-alert helper operations"
+  incidenthub.backend.cases_api -> incidenthub.backend.alert_repo "Cross-link with related alerts"
+  incidenthub.backend.cases_api -> incidenthub.backend.case_event_repo "Case timeline entries"
+  incidenthub.backend.cases_api -> incidenthub.backend.xp_service "Award XP on first close"
+  incidenthub.backend.cases_api -> incidenthub.backend.async_ops_queue "Queue async create/delete operations"
+  incidenthub.backend.cases_api -> incidenthub.backend.audit_pipeline "Audit case mutations"
+  incidenthub.backend.cases_api -> incidenthub.elastic "Index case search documents"
+
+  incidenthub.backend.case_workspace_api -> incidenthub.backend.task_repo "Task lifecycle"
+  incidenthub.backend.case_workspace_api -> incidenthub.backend.observable_repo "Observable lifecycle"
+  incidenthub.backend.case_workspace_api -> incidenthub.backend.case_event_repo "Timeline and event entries"
+  incidenthub.backend.case_workspace_api -> incidenthub.backend.case_page_repo "Case pages and notes"
+  incidenthub.backend.case_workspace_api -> incidenthub.backend.attachment_repo "Attachment metadata"
+  incidenthub.backend.case_workspace_api -> incidenthub.backend.catalog_repo "Catalog lookups for forms/policies"
+  incidenthub.backend.case_workspace_api -> incidenthub.backend.audit_pipeline "Audit workspace changes"
+  incidenthub.backend.case_workspace_api -> incidenthub.elastic "Index observables for search"
+
+  incidenthub.backend.attachments_api -> incidenthub.backend.attachment_repo "Attachment metadata persistence"
+  incidenthub.backend.attachments_api -> incidenthub.backend.media_service "Presigned upload/download calls"
+  incidenthub.backend.attachments_api -> incidenthub.backend.audit_pipeline "Audit attachment actions"
+
+  incidenthub.backend.forum_api -> incidenthub.backend.catalog_repo "Forum threads/posts on catalog layer"
+  incidenthub.backend.forum_api -> incidenthub.backend.forum_binding_repo "External thread binding reads"
+  incidenthub.backend.forum_api -> incidenthub.backend.audit_pipeline "Audit forum operations"
+
+  incidenthub.backend.comms_api -> incidenthub.backend.catalog_repo "Thread/message metadata persistence"
+  incidenthub.backend.comms_api -> incidenthub.backend.forum_proxy "Send/sync external communications"
+  incidenthub.backend.comms_api -> incidenthub.backend.connector_repo "Connector lookup for channel routing"
+  incidenthub.backend.comms_api -> incidenthub.backend.audit_pipeline "Audit communication actions"
+
+  incidenthub.backend.catalog_api -> incidenthub.backend.catalog_repo "Catalog CRUD and domain config"
+  incidenthub.backend.catalog_api -> incidenthub.backend.xp_service "Achievement reward side effects"
+  incidenthub.backend.catalog_api -> incidenthub.backend.notification_delivery_queue "Enqueue catalog notifications for async delivery"
+  incidenthub.backend.catalog_api -> incidenthub.backend.audit_pipeline "Audit catalog mutations"
+
+  incidenthub.backend.notifications_api -> incidenthub.backend.notification_bot_repo "Admin bot CRUD for tenant-scoped notification delivery"
+  incidenthub.backend.notifications_api -> incidenthub.backend.notification_settings_repo "User delivery preference read/update"
+  incidenthub.backend.notifications_api -> incidenthub.backend.audit_pipeline "Audit notification settings mutations"
+
+  incidenthub.backend.connectors_api -> incidenthub.backend.connector_repo "Connector config, run state and run history"
+  incidenthub.backend.connectors_api -> incidenthub.backend.ingestion_scheduler "Schedule/manual run planning"
+  incidenthub.backend.connectors_api -> incidenthub.backend.inbound_worker "Manual run trigger"
+  incidenthub.backend.connectors_api -> incidenthub.backend.outbound_service "Outbound connector metadata checks"
+  incidenthub.backend.connectors_api -> incidenthub.backend.audit_pipeline "Audit connector actions"
+
+  incidenthub.backend.workflow_api -> incidenthub.backend.catalog_repo "Load workflow definition from catalog"
+  incidenthub.backend.workflow_api -> incidenthub.backend.workflow_definition_engine "Normalize graph definition payload"
+  incidenthub.backend.workflow_api -> incidenthub.backend.workflow_runtime "Execute node graph"
+  incidenthub.backend.workflow_api -> incidenthub.backend.workflow_run_repo "Persist run lifecycle and retention"
+  incidenthub.backend.workflow_api -> incidenthub.backend.audit_pipeline "Audit workflow run/test-run actions"
+  incidenthub.backend.workflow_runtime -> incidenthub.backend.workflow_node_registry "Resolve node executors by node type"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_trigger "Dispatch trigger node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_webhook_trigger "Dispatch webhook trigger node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_kafka_trigger "Dispatch kafka trigger node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_condition "Dispatch condition node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_switch "Dispatch switch node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_delay "Dispatch delay node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_scheduler "Dispatch scheduler node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_transform "Dispatch transform node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_aggregate "Dispatch aggregate node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_analyzer "Dispatch analyzer action node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_responder "Dispatch responder action node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_redis "Dispatch redis node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_postgres "Dispatch postgres query node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_cassandra "Dispatch cassandra query node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_telegram "Dispatch telegram send node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_python "Dispatch python code node"
+  incidenthub.backend.workflow_node_registry -> incidenthub.backend.workflow_node_s3 "Dispatch s3 object node"
+  incidenthub.backend.workflow_node_webhook_trigger -> incidenthub.backend.outbound_service "Poll webhook connector messages"
+  incidenthub.backend.workflow_node_kafka_trigger -> incidenthub.backend.outbound_service "Poll kafka connector messages"
+  incidenthub.backend.workflow_node_analyzer -> incidenthub.backend.outbound_service "Send analyzer action payload"
+  incidenthub.backend.workflow_node_responder -> incidenthub.backend.outbound_service "Send responder action payload"
+  incidenthub.backend.workflow_node_telegram -> incidenthub.backend.outbound_service "Send telegram message"
+  incidenthub.backend.workflow_node_analyzer -> incidenthub.backend.catalog_repo "Resolve analyzer connector config"
+  incidenthub.backend.workflow_node_responder -> incidenthub.backend.catalog_repo "Resolve responder connector config"
+  incidenthub.backend.workflow_node_telegram -> incidenthub.backend.catalog_repo "Resolve telegram connector config"
+  incidenthub.backend.workflow_node_postgres -> incidenthub.backend.system_repo "Execute read-only SQL query"
+  incidenthub.backend.workflow_node_redis -> incidenthub.redis "Read/write Redis keys and queues"
+  incidenthub.backend.workflow_node_cassandra -> external_data_sources "Query external Cassandra HTTP gateway"
+  incidenthub.backend.workflow_node_s3 -> incidenthub.s3 "Put/get/presign object operations"
+  incidenthub.backend.workflow_node_python -> incidenthub.backend.workflow_runtime "Return computed output to runtime state"
+
+  incidenthub.backend.ai_api -> incidenthub.backend.ai_service "Execute ask/analyze flows"
+  incidenthub.backend.ai_api -> incidenthub.backend.ai_repo "Persist session/message/analysis results"
+  incidenthub.backend.ai_api -> incidenthub.backend.case_repo "Load case context for analysis"
+  incidenthub.backend.ai_api -> incidenthub.backend.audit_pipeline "Audit AI usage"
+
+  incidenthub.backend.search_api -> incidenthub.elastic "Primary search execution"
+  incidenthub.backend.search_api -> incidenthub.backend.search_fallback_engine "Fallback strategy orchestration"
+  incidenthub.backend.search_fallback_engine -> incidenthub.backend.alert_repo "Fallback query for alerts"
+  incidenthub.backend.search_fallback_engine -> incidenthub.backend.case_repo "Fallback query for cases"
+  incidenthub.backend.search_fallback_engine -> incidenthub.backend.catalog_repo "Fallback query for forum threads"
+
+  incidenthub.backend.experience_api -> incidenthub.backend.experience_repo "XP events and aggregate progression data"
+  incidenthub.backend.experience_api -> incidenthub.backend.membership_repo "Tenant-scoped access validation"
+  incidenthub.backend.experience_api -> incidenthub.backend.audit_pipeline "Audit manual grants and XP operations"
+
+  incidenthub.backend.system_api -> incidenthub.backend.system_repo "Health, usage and resource stats"
+  incidenthub.backend.system_api -> incidenthub.redis "Health ping"
+  incidenthub.backend.system_api -> incidenthub.elastic "Health ping"
+  incidenthub.backend.system_api -> incidenthub.s3 "Health ping"
+  incidenthub.backend.system_api -> incidenthub.ai_model "Health ping"
+
+  incidenthub.backend.async_ops_queue -> incidenthub.kafka "Produce/consume async operations"
+  incidenthub.backend.async_ops_queue -> incidenthub.backend.alert_repo "Apply queued alert create/delete"
+  incidenthub.backend.async_ops_queue -> incidenthub.backend.case_repo "Apply queued case create/delete"
+  incidenthub.backend.async_ops_queue -> incidenthub.backend.audit_pipeline "Audit async processing results"
+  incidenthub.backend.async_ops_queue -> incidenthub.elastic "Index async-created entities"
+  incidenthub.backend.notification_delivery_queue -> incidenthub.kafka "Produce/consume notification delivery events"
+  incidenthub.backend.notification_delivery_queue -> incidenthub.backend.notification_settings_repo "Resolve user delivery preferences before send"
+  incidenthub.backend.notification_delivery_queue -> incidenthub.backend.notification_bot_repo "Resolve tenant telegram bot credentials"
+  incidenthub.backend.notification_delivery_queue -> incidenthub.backend.outbound_service "Send delivery payload to configured channel driver"
+
+  external_security_sources -> incidenthub.backend.inbound_worker "Ingest security telemetry"
+  external_data_sources -> incidenthub.backend.inbound_worker "Ingest from SQL/S3/Kafka/REST"
+  threat_intel -> incidenthub.backend.inbound_worker "Threat context enrichment input"
+  incidenthub.backend.ingestion_scheduler -> incidenthub.backend.inbound_worker "Dispatch run plan to worker"
+  incidenthub.backend.inbound_worker -> incidenthub.backend.source_http_adapter "HTTP source ingestion path"
+  incidenthub.backend.inbound_worker -> incidenthub.backend.source_sql_adapter "SQL source ingestion path"
+  incidenthub.backend.inbound_worker -> incidenthub.backend.source_s3_adapter "S3 source ingestion path"
+  incidenthub.backend.inbound_worker -> incidenthub.backend.source_kafka_adapter "Kafka source ingestion path"
+  incidenthub.backend.inbound_worker -> incidenthub.backend.source_redis_adapter "Redis source ingestion path"
+  incidenthub.backend.source_http_adapter -> external_security_sources "Read HTTP feed payloads"
+  incidenthub.backend.source_sql_adapter -> external_data_sources "Read SQL datasets"
+  incidenthub.backend.source_s3_adapter -> external_data_sources "Read object storage datasets"
+  incidenthub.backend.source_kafka_adapter -> incidenthub.kafka.kafka_inbound "Consume inbound Kafka messages"
+  incidenthub.backend.source_redis_adapter -> incidenthub.redis "Consume Redis queue/list messages"
+  incidenthub.backend.inbound_worker -> incidenthub.backend.alert_repo "Create alerts from ingested records"
+  incidenthub.backend.inbound_worker -> incidenthub.backend.connector_repo "Persist ingest cursor/state"
+  incidenthub.backend.inbound_worker -> incidenthub.backend.audit_pipeline "Audit ingestion runs"
+  incidenthub.backend.inbound_worker -> incidenthub.elastic "Index ingested alerts"
+  incidenthub.backend.inbound_worker -> incidenthub.kafka "Consume inbound topics when configured"
+
+  incidenthub.backend.forum_proxy -> incidenthub.backend.outbound_service "Connector send/sync operations"
+  incidenthub.backend.forum_proxy -> incidenthub.backend.forum_sync_engine "Resolve external cursor sync operations"
+  incidenthub.backend.forum_proxy -> incidenthub.backend.forum_binding_repo "Conversation binding + recipient alias state"
+  incidenthub.backend.forum_proxy -> incidenthub.backend.catalog_repo "Thread/message materialization"
+  incidenthub.backend.forum_proxy -> incidenthub.backend.audit_pipeline "Audit proxy communication events"
+
+  incidenthub.backend.outbound_service -> external_comm_channels "Deliver and poll external messages"
+  incidenthub.backend.outbound_service -> incidenthub.backend.outbound_driver_mock "Resolve mock driver implementation"
+  incidenthub.backend.outbound_service -> incidenthub.backend.outbound_driver_webhook "Resolve webhook driver implementation"
+  incidenthub.backend.outbound_service -> incidenthub.backend.outbound_driver_telegram "Resolve telegram driver implementation"
+  incidenthub.backend.outbound_service -> incidenthub.backend.outbound_driver_kafka "Resolve kafka driver implementation"
+  incidenthub.backend.outbound_service -> incidenthub.backend.outbound_driver_redis "Resolve redis driver implementation"
+  incidenthub.backend.outbound_driver_webhook -> external_comm_channels "Deliver/poll webhook channel messages"
+  incidenthub.backend.outbound_driver_telegram -> external_comm_channels "Deliver/poll telegram bot messages"
+  incidenthub.backend.outbound_driver_kafka -> incidenthub.kafka.kafka_outbound "Publish and poll kafka channel messages"
+  incidenthub.backend.outbound_driver_redis -> incidenthub.redis "Publish and poll redis channel messages"
+  incidenthub.backend.outbound_service -> incidenthub.kafka "Kafka channel producer/consumer mode"
+  incidenthub.backend.outbound_service -> incidenthub.redis "Redis channel queue mode"
+  incidenthub.backend.outbound_service -> ticketing_system "Optional escalation updates"
+
+  incidenthub.backend.ai_service -> incidenthub.backend.ai_retriever "Retrieve tenant context documents"
+  incidenthub.backend.ai_service -> incidenthub.backend.ai_prompt_builder "Assemble prompt and truncation policy"
+  incidenthub.backend.ai_service -> incidenthub.backend.ai_response_parser "Normalize model output into API schema"
+  incidenthub.backend.ai_retriever -> incidenthub.elastic "Tenant-scoped retrieval context"
+  incidenthub.backend.ai_prompt_builder -> incidenthub.ai_model "Prompt inference and response generation"
+  incidenthub.backend.ai_response_parser -> incidenthub.backend.ai_repo "Persist normalized analysis/chat payloads"
+  incidenthub.backend.ai_service -> incidenthub.ai_model "Prompt inference and response generation"
+  incidenthub.backend.ai_service -> incidenthub.ai_model.ai_inference "Execute inference calls"
+  incidenthub.backend.ai_service -> incidenthub.ai_model.ai_model_registry "Resolve model configuration"
+  incidenthub.backend.ai_service -> incidenthub.backend.ai_repo "Persist prompts/results"
+
+  incidenthub.backend.xp_service -> incidenthub.backend.experience_repo "Award/revoke and aggregate XP"
+  incidenthub.backend.xp_service -> incidenthub.backend.case_repo "Validate first-close reward semantics"
+
+  incidenthub.backend.media_service -> incidenthub.s3 "Object storage for user/case artifacts"
+  incidenthub.backend.media_service -> incidenthub.s3.s3_user_media "Profile media object operations"
+  incidenthub.backend.media_service -> incidenthub.s3.s3_case_artifacts "Case evidence object operations"
+  incidenthub.backend.media_service -> incidenthub.s3.s3_presigned "Presigned URL issue/consume contract"
+  incidenthub.backend.media_service -> incidenthub.backend.attachment_repo "Attachment metadata updates"
+  incidenthub.backend.media_service -> incidenthub.backend.user_repo "Profile media URL updates"
+
+  incidenthub.backend.migration_runner -> incidenthub.postgres "schema_migrations and SQL migration application"
+  incidenthub.backend.migration_runner -> incidenthub.postgres.pg_migrations "Migration version lock/checkpoint writes"
+  incidenthub.backend.bootstrap_seed -> incidenthub.postgres "Platform bootstrap and initial seed entities"
+  incidenthub.backend.bootstrap_seed -> incidenthub.postgres.pg_auth "Bootstrap admin user/session structures"
+  incidenthub.backend.bootstrap_seed -> incidenthub.postgres.pg_tenant "Bootstrap tenant/membership structures"
+
+  incidenthub.backend.user_repo -> incidenthub.postgres "users, user profile fields, media URL refs"
+  incidenthub.backend.user_repo -> incidenthub.postgres.pg_auth "users table operations"
+  incidenthub.backend.tenant_repo -> incidenthub.postgres "tenants"
+  incidenthub.backend.tenant_repo -> incidenthub.postgres.pg_tenant "tenants table operations"
+  incidenthub.backend.membership_repo -> incidenthub.postgres "tenant_memberships"
+  incidenthub.backend.membership_repo -> incidenthub.postgres.pg_tenant "tenant_memberships operations"
+  incidenthub.backend.refresh_repo -> incidenthub.postgres "refresh_tokens"
+  incidenthub.backend.refresh_repo -> incidenthub.postgres.pg_auth "refresh_tokens operations"
+  incidenthub.backend.api_token_repo -> incidenthub.postgres "api_access_tokens"
+  incidenthub.backend.api_token_repo -> incidenthub.postgres.pg_auth "api_access_tokens operations"
+  incidenthub.backend.alert_repo -> incidenthub.postgres "alerts"
+  incidenthub.backend.alert_repo -> incidenthub.postgres.pg_incidents "alerts table operations"
+  incidenthub.backend.case_repo -> incidenthub.postgres "cases"
+  incidenthub.backend.case_repo -> incidenthub.postgres.pg_incidents "cases table operations"
+  incidenthub.backend.task_repo -> incidenthub.postgres "tasks"
+  incidenthub.backend.task_repo -> incidenthub.postgres.pg_incidents "tasks table operations"
+  incidenthub.backend.observable_repo -> incidenthub.postgres "observables"
+  incidenthub.backend.observable_repo -> incidenthub.postgres.pg_incidents "observables table operations"
+  incidenthub.backend.case_event_repo -> incidenthub.postgres "case_events"
+  incidenthub.backend.case_event_repo -> incidenthub.postgres.pg_workspace "case_events table operations"
+  incidenthub.backend.case_page_repo -> incidenthub.postgres "case_pages"
+  incidenthub.backend.case_page_repo -> incidenthub.postgres.pg_workspace "case_pages table operations"
+  incidenthub.backend.attachment_repo -> incidenthub.postgres "case_attachments"
+  incidenthub.backend.attachment_repo -> incidenthub.postgres.pg_workspace "case_attachments table operations"
+  incidenthub.backend.catalog_repo -> incidenthub.postgres "catalog_items"
+  incidenthub.backend.catalog_repo -> incidenthub.postgres.pg_catalog "catalog_items and status config operations"
+  incidenthub.backend.connector_repo -> incidenthub.postgres "connector_ingest_state, inbound_connector_runs, catalog_items"
+  incidenthub.backend.connector_repo -> incidenthub.postgres.pg_connectors "connector state/run table operations"
+  incidenthub.backend.workflow_run_repo -> incidenthub.postgres "workflow_runs lifecycle and retention"
+  incidenthub.backend.workflow_run_repo -> incidenthub.postgres.pg_workflows "workflow_runs and workflow catalog definition refs"
+  incidenthub.backend.notification_bot_repo -> incidenthub.postgres "telegram_notification_bots create/update/delete/list operations"
+  incidenthub.backend.notification_bot_repo -> incidenthub.postgres.pg_notifications "tenant bot identity and config operations"
+  incidenthub.backend.notification_settings_repo -> incidenthub.postgres "user_notification_settings get/upsert/delete operations"
+  incidenthub.backend.notification_settings_repo -> incidenthub.postgres.pg_notifications "tenant-user notification delivery preference operations"
+  incidenthub.backend.forum_binding_repo -> incidenthub.postgres "forum_external_bindings, connector_recipient_aliases"
+  incidenthub.backend.forum_binding_repo -> incidenthub.postgres.pg_connectors "forum binding and alias operations"
+  incidenthub.backend.ai_repo -> incidenthub.postgres "ai_chat_sessions, ai_chat_messages, case_ai_analyses"
+  incidenthub.backend.ai_repo -> incidenthub.postgres.pg_ai "AI session/message/analysis operations"
+  incidenthub.backend.experience_repo -> incidenthub.postgres "user_experience_events, user_achievements, experience_reward_config"
+  incidenthub.backend.experience_repo -> incidenthub.postgres.pg_experience "XP events/awards config operations"
+  incidenthub.backend.audit_repo -> incidenthub.postgres "audit_logs"
+  incidenthub.backend.audit_repo -> incidenthub.postgres.pg_audit "audit_logs append operations"
+  incidenthub.backend.system_repo -> incidenthub.postgres "tenant/system aggregate queries"
+  incidenthub.backend.system_repo -> incidenthub.postgres.pg_tenant "tenant aggregate reads"
+  incidenthub.backend.system_repo -> incidenthub.postgres.pg_incidents "incident aggregate reads"
+  incidenthub.backend.system_repo -> incidenthub.postgres.pg_connectors "connector aggregate reads"
+
+  incidenthub.backend.login_rate_limiter -> incidenthub.redis "Distributed auth rate-limit state"
+  incidenthub.backend.login_rate_limiter -> incidenthub.redis.redis_rate_limit "Read/write login throttling keys"
+  incidenthub.backend.api_cache_read -> incidenthub.redis "Read cache entries"
+  incidenthub.backend.api_cache_read -> incidenthub.redis.redis_api_cache "Read serialized response cache"
+  incidenthub.backend.api_cache_invalidate -> incidenthub.redis "Cache version counters"
+  incidenthub.backend.api_cache_invalidate -> incidenthub.redis.redis_cache_versions "Bump cache version markers"
+
+  incidenthub.backend.alerts_api -> incidenthub.elastic.es_alerts "Write/read alert index documents"
+  incidenthub.backend.cases_api -> incidenthub.elastic.es_cases "Write/read case index documents"
+  incidenthub.backend.case_workspace_api -> incidenthub.elastic.es_observables "Write/read observable index documents"
+  incidenthub.backend.forum_api -> incidenthub.elastic.es_forum "Write/read forum index documents"
+  incidenthub.backend.search_api -> incidenthub.elastic.es_alerts "Search alerts corpus"
+  incidenthub.backend.search_api -> incidenthub.elastic.es_cases "Search cases corpus"
+  incidenthub.backend.search_api -> incidenthub.elastic.es_forum "Search forum corpus"
+
+  incidenthub.backend.async_ops_queue -> incidenthub.kafka.kafka_async_ops "Consume async operations"
+  incidenthub.backend.notification_delivery_queue -> incidenthub.kafka.kafka_notifications "Produce/consume notification delivery events"
+  incidenthub.backend.inbound_worker -> incidenthub.kafka.kafka_inbound "Consume inbound source topics"
+  incidenthub.backend.outbound_service -> incidenthub.kafka.kafka_outbound "Publish outbound channel events"
+
+  incidenthub.backend -> incidenthub.otel "OpenTelemetry trace export"
+  incidenthub.backend -> incidenthub.otel.otel_traces "Emit span data"
+  incidenthub.otel.otel_traces -> incidenthub.otel.otel_exporters "Forward traces through exporters"
+  incidenthub.prometheus -> incidenthub.backend "Scrape /metrics"
+  incidenthub.prometheus.prom_scrape -> incidenthub.backend.request_metrics "Pull app metrics"
+  incidenthub.prometheus.prom_scrape -> incidenthub.prometheus.prom_tsdb "Persist scrape samples"
+  incidenthub.grafana -> incidenthub.prometheus "Read metrics and render dashboards"
+  incidenthub.grafana.grafana_dashboards -> incidenthub.prometheus.prom_tsdb "Render SOC/platform views from TSDB"
+  incidenthub.grafana.grafana_alerting -> incidenthub.prometheus.prom_tsdb "Evaluate metric alert conditions"
+}
+
+views {
+  view systemLandscape {
+    title "IncidentHub System Landscape (Detailed)"
+    include *
+    autoLayout LeftRight
+  }
+
+  view runtimePackages {
+    title "IncidentHub Runtime Packages and Infrastructure (Mega-View)"
+    include platform_admin
+    include tenant_admin
+    include soc_analyst
+    include incident_commander
+    include viewer
+    include automation_bot
+    include incidenthub.frontend_runtime_packages
+    include incidenthub.frontend_runtime_packages.*
+    include incidenthub.backend_runtime_packages
+    include incidenthub.backend_runtime_packages.*
+    include incidenthub.postgres
+    include incidenthub.redis
+    include incidenthub.elastic
+    include incidenthub.s3
+    include incidenthub.kafka
+    include incidenthub.ai_model
+    include incidenthub.otel
+    include incidenthub.prometheus
+    include incidenthub.grafana
+    include identity_provider
+    include external_security_sources
+    include external_data_sources
+    include external_comm_channels
+    include threat_intel
+    include ticketing_system
+    autoLayout TopBottom
+  }
+
+  view containers {
+    title "IncidentHub Container Architecture (Detailed)"
+    include incidenthub.frontend
+    include incidenthub.backend
+    include incidenthub.postgres
+    include incidenthub.redis
+    include incidenthub.elastic
+    include incidenthub.s3
+    include incidenthub.kafka
+    include incidenthub.ai_model
+    include incidenthub.otel
+    include incidenthub.prometheus
+    include incidenthub.grafana
+    include incidenthub.postgres.*
+    include incidenthub.redis.*
+    include incidenthub.elastic.*
+    include incidenthub.s3.*
+    include incidenthub.kafka.*
+    include incidenthub.ai_model.*
+    include incidenthub.otel.*
+    include incidenthub.prometheus.*
+    include incidenthub.grafana.*
+    include identity_provider
+    include external_security_sources
+    include external_data_sources
+    include external_comm_channels
+    include threat_intel
+    include ticketing_system
+    autoLayout TopBottom
+  }
+
+  view frontendComponents {
+    title "Frontend Component Map"
+    include platform_admin
+    include tenant_admin
+    include soc_analyst
+    include incident_commander
+    include viewer
+    include incidenthub.frontend.*
+    include incidenthub.backend.router
+    autoLayout LeftRight
+  }
+
+  view backendSecurityEdge {
+    title "Backend Edge and Security Layer"
+    include incidenthub.backend.router
+    include incidenthub.backend.security_headers
+    include incidenthub.backend.request_metrics
+    include incidenthub.backend.error_handler
+    include incidenthub.backend.auth_mw
+    include incidenthub.backend.api_token_policy
+    include incidenthub.backend.api_scope_engine
+    include incidenthub.backend.tenant_resolver
+    include incidenthub.backend.rbac_policy
+    include incidenthub.backend.login_rate_limiter
+    include incidenthub.backend.api_cache_read
+    include incidenthub.backend.api_cache_invalidate
+    include incidenthub.backend.audit_pipeline
+    include incidenthub.redis
+    include incidenthub.redis.*
+    include incidenthub.postgres
+    include incidenthub.postgres.pg_auth
+    include incidenthub.postgres.pg_tenant
+    autoLayout LeftRight
+  }
+
+  view authIdentityFlow {
+    title "Auth and Identity Flow (JWT + API Token + Tenant)"
+    include automation_bot
+    include soc_analyst
+    include incidenthub.frontend.auth_ui
+    include incidenthub.frontend.api_client
+    include incidenthub.backend.router
+    include incidenthub.backend.auth_mw
+    include incidenthub.backend.api_token_policy
+    include incidenthub.backend.tenant_resolver
+    include incidenthub.backend.auth_api
+    include incidenthub.backend.session_manager
+    include incidenthub.backend.api_tokens_api
+    include incidenthub.backend.api_scope_engine
+    include incidenthub.backend.user_repo
+    include incidenthub.backend.membership_repo
+    include incidenthub.backend.refresh_repo
+    include incidenthub.backend.api_token_repo
+    include incidenthub.backend.login_rate_limiter
+    include incidenthub.postgres
+    include incidenthub.postgres.pg_auth
+    include incidenthub.postgres.pg_tenant
+    include incidenthub.redis
+    include incidenthub.redis.redis_rate_limit
+    include incidenthub.redis.redis_api_cache
+    include incidenthub.redis.redis_cache_versions
+    include identity_provider
+    autoLayout LeftRight
+  }
+
+  view alertsCasesFlow {
+    title "Alerts and Cases Domain Flow"
+    include soc_analyst
+    include incidenthub.frontend.alerts_ui
+    include incidenthub.frontend.cases_ui
+    include incidenthub.frontend.api_client
+    include incidenthub.backend.alerts_api
+    include incidenthub.backend.cases_api
+    include incidenthub.backend.case_status_engine
+    include incidenthub.backend.case_bulk_engine
+    include incidenthub.backend.async_ops_queue
+    include incidenthub.backend.alert_repo
+    include incidenthub.backend.case_repo
+    include incidenthub.backend.case_event_repo
+    include incidenthub.backend.audit_pipeline
+    include incidenthub.backend.xp_service
+    include incidenthub.backend.experience_repo
+    include incidenthub.postgres
+    include incidenthub.postgres.pg_incidents
+    include incidenthub.postgres.pg_workspace
+    include incidenthub.postgres.pg_experience
+    include incidenthub.postgres.pg_audit
+    include incidenthub.kafka
+    include incidenthub.kafka.kafka_async_ops
+    include incidenthub.elastic
+    include incidenthub.elastic.es_alerts
+    include incidenthub.elastic.es_cases
+    autoLayout LeftRight
+  }
+
+  view caseWorkspaceFlow {
+    title "Case Workspace Flow (Tasks, Observables, Pages, Attachments)"
+    include soc_analyst
+    include incidenthub.frontend.case_workspace_ui
+    include incidenthub.frontend.api_client
+    include incidenthub.backend.case_workspace_api
+    include incidenthub.backend.attachments_api
+    include incidenthub.backend.task_repo
+    include incidenthub.backend.observable_repo
+    include incidenthub.backend.case_event_repo
+    include incidenthub.backend.case_page_repo
+    include incidenthub.backend.attachment_repo
+    include incidenthub.backend.media_service
+    include incidenthub.backend.catalog_repo
+    include incidenthub.postgres
+    include incidenthub.postgres.pg_incidents
+    include incidenthub.postgres.pg_workspace
+    include incidenthub.postgres.pg_catalog
+    include incidenthub.s3
+    include incidenthub.s3.*
+    include incidenthub.elastic
+    include incidenthub.elastic.es_observables
+    autoLayout LeftRight
+  }
+
+  view communicationsFlow {
+    title "Forum + Case Communications Flow"
+    include soc_analyst
+    include incidenthub.frontend.forum_ui
+    include incidenthub.frontend.comms_ui
+    include incidenthub.frontend.api_client
+    include incidenthub.backend.forum_api
+    include incidenthub.backend.comms_api
+    include incidenthub.backend.forum_proxy
+    include incidenthub.backend.forum_sync_engine
+    include incidenthub.backend.outbound_service
+    include incidenthub.backend.forum_binding_repo
+    include incidenthub.backend.connector_repo
+    include incidenthub.backend.catalog_repo
+    include incidenthub.postgres
+    include incidenthub.postgres.pg_catalog
+    include incidenthub.postgres.pg_connectors
+    include incidenthub.kafka
+    include incidenthub.kafka.kafka_outbound
+    include external_comm_channels
+    include ticketing_system
+    autoLayout LeftRight
+  }
+
+  view connectorsFlow {
+    title "Connector Ingestion and Transport Flow"
+    include tenant_admin
+    include incidenthub.frontend.connectors_ui
+    include incidenthub.frontend.api_client
+    include incidenthub.backend.connectors_api
+    include incidenthub.backend.inbound_worker
+    include incidenthub.backend.ingestion_scheduler
+    include incidenthub.backend.source_http_adapter
+    include incidenthub.backend.source_sql_adapter
+    include incidenthub.backend.source_s3_adapter
+    include incidenthub.backend.source_kafka_adapter
+    include incidenthub.backend.source_redis_adapter
+    include incidenthub.backend.outbound_service
+    include incidenthub.backend.notification_delivery_queue
+    include incidenthub.backend.outbound_driver_webhook
+    include incidenthub.backend.outbound_driver_telegram
+    include incidenthub.backend.outbound_driver_kafka
+    include incidenthub.backend.outbound_driver_redis
+    include incidenthub.backend.connector_repo
+    include incidenthub.backend.alert_repo
+    include incidenthub.backend.audit_pipeline
+    include incidenthub.postgres
+    include incidenthub.postgres.pg_connectors
+    include incidenthub.postgres.pg_catalog
+    include incidenthub.postgres.pg_incidents
+    include incidenthub.kafka
+    include incidenthub.kafka.kafka_inbound
+    include incidenthub.kafka.kafka_outbound
+    include incidenthub.kafka.kafka_notifications
+    include incidenthub.elastic
+    include incidenthub.elastic.es_alerts
+    include external_security_sources
+    include external_data_sources
+    include threat_intel
+    include external_comm_channels
+    autoLayout LeftRight
+  }
+
+  view aiAndSearchFlow {
+    title "AI and Search Flow"
+    include soc_analyst
+    include incidenthub.frontend.ai_ui
+    include incidenthub.frontend.api_client
+    include incidenthub.backend.ai_api
+    include incidenthub.backend.search_api
+    include incidenthub.backend.search_fallback_engine
+    include incidenthub.backend.ai_service
+    include incidenthub.backend.ai_retriever
+    include incidenthub.backend.ai_prompt_builder
+    include incidenthub.backend.ai_response_parser
+    include incidenthub.backend.ai_repo
+    include incidenthub.backend.case_repo
+    include incidenthub.backend.alert_repo
+    include incidenthub.backend.catalog_repo
+    include incidenthub.postgres
+    include incidenthub.postgres.pg_ai
+    include incidenthub.postgres.pg_incidents
+    include incidenthub.postgres.pg_catalog
+    include incidenthub.elastic
+    include incidenthub.elastic.*
+    include incidenthub.ai_model
+    include incidenthub.ai_model.*
+    autoLayout LeftRight
+  }
+
+  view experienceFlow {
+    title "Experience, Gamification and User Performance Flow"
+    include tenant_admin
+    include soc_analyst
+    include incidenthub.frontend.profile_ui
+    include incidenthub.frontend.admin_ui
+    include incidenthub.frontend.api_client
+    include incidenthub.backend.experience_api
+    include incidenthub.backend.users_api
+    include incidenthub.backend.cases_api
+    include incidenthub.backend.xp_service
+    include incidenthub.backend.experience_repo
+    include incidenthub.backend.membership_repo
+    include incidenthub.backend.audit_pipeline
+    include incidenthub.postgres
+    include incidenthub.postgres.pg_experience
+    include incidenthub.postgres.pg_incidents
+    include incidenthub.postgres.pg_tenant
+    include incidenthub.postgres.pg_audit
+    autoLayout LeftRight
+  }
+
+  view repositoriesAndStorage {
+    title "Repository and Storage Detail"
+    include incidenthub.backend.user_repo
+    include incidenthub.backend.tenant_repo
+    include incidenthub.backend.membership_repo
+    include incidenthub.backend.refresh_repo
+    include incidenthub.backend.api_token_repo
+    include incidenthub.backend.alert_repo
+    include incidenthub.backend.case_repo
+    include incidenthub.backend.task_repo
+    include incidenthub.backend.observable_repo
+    include incidenthub.backend.case_event_repo
+    include incidenthub.backend.case_page_repo
+    include incidenthub.backend.attachment_repo
+    include incidenthub.backend.catalog_repo
+    include incidenthub.backend.connector_repo
+    include incidenthub.backend.workflow_run_repo
+    include incidenthub.backend.notification_bot_repo
+    include incidenthub.backend.notification_settings_repo
+    include incidenthub.backend.forum_binding_repo
+    include incidenthub.backend.ai_repo
+    include incidenthub.backend.experience_repo
+    include incidenthub.backend.audit_repo
+    include incidenthub.backend.system_repo
+    include incidenthub.postgres
+    include incidenthub.postgres.*
+    include incidenthub.s3
+    include incidenthub.s3.*
+    include incidenthub.redis
+    include incidenthub.redis.*
+    include incidenthub.elastic
+    include incidenthub.elastic.*
+    include incidenthub.kafka
+    include incidenthub.kafka.*
+    autoLayout LeftRight
+  }
+
+  view runtimeOperations {
+    title "Runtime Operations, Migrations and Observability"
+    include platform_admin
+    include incidenthub.backend.migration_runner
+    include incidenthub.backend.bootstrap_seed
+    include incidenthub.backend.system_api
+    include incidenthub.backend.request_metrics
+    include incidenthub.backend.audit_pipeline
+    include incidenthub.postgres
+    include incidenthub.postgres.pg_migrations
+    include incidenthub.postgres.pg_audit
+    include incidenthub.redis
+    include incidenthub.redis.*
+    include incidenthub.elastic
+    include incidenthub.elastic.*
+    include incidenthub.s3
+    include incidenthub.s3.*
+    include incidenthub.ai_model
+    include incidenthub.ai_model.*
+    include incidenthub.otel
+    include incidenthub.otel.*
+    include incidenthub.prometheus
+    include incidenthub.prometheus.*
+    include incidenthub.grafana
+    include incidenthub.grafana.*
+    autoLayout TopBottom
+  }
+
+  view dataStoresInternals {
+    title "Data Stores Internal Structure"
+    include incidenthub.postgres
+    include incidenthub.postgres.*
+    include incidenthub.redis
+    include incidenthub.redis.*
+    include incidenthub.elastic
+    include incidenthub.elastic.*
+    include incidenthub.s3
+    include incidenthub.s3.*
+    include incidenthub.kafka
+    include incidenthub.kafka.*
+    include incidenthub.ai_model
+    include incidenthub.ai_model.*
+    autoLayout LeftRight
+  }
+
+  view asyncAndMessagingFlow {
+    title "Async and Messaging Flow (Queue + Connector Topics)"
+    include soc_analyst
+    include tenant_admin
+    include incidenthub.frontend.alerts_ui
+    include incidenthub.frontend.cases_ui
+    include incidenthub.frontend.connectors_ui
+    include incidenthub.frontend.api_client
+    include incidenthub.backend.alerts_api
+    include incidenthub.backend.cases_api
+    include incidenthub.backend.connectors_api
+    include incidenthub.backend.async_ops_queue
+    include incidenthub.backend.notification_delivery_queue
+    include incidenthub.backend.inbound_worker
+    include incidenthub.backend.outbound_service
+    include incidenthub.backend.outbound_driver_kafka
+    include incidenthub.backend.outbound_driver_redis
+    include incidenthub.backend.alert_repo
+    include incidenthub.backend.case_repo
+    include incidenthub.backend.connector_repo
+    include incidenthub.backend.workflow_api
+    include incidenthub.backend.workflow_runtime
+    include incidenthub.backend.workflow_node_kafka_trigger
+    include incidenthub.backend.workflow_node_webhook_trigger
+    include incidenthub.backend.audit_pipeline
+    include incidenthub.kafka
+    include incidenthub.kafka.*
+    include incidenthub.postgres
+    include incidenthub.postgres.pg_connectors
+    include incidenthub.postgres.pg_incidents
+    include incidenthub.postgres.pg_workflows
+    include external_security_sources
+    include external_data_sources
+    include external_comm_channels
+    autoLayout LeftRight
+  }
+
+  view notificationDeliveryFlow {
+    title "Notification Delivery Flow (Tenant Bots + Kafka Queue)"
+    include tenant_admin
+    include soc_analyst
+    include incidenthub.frontend.admin_ui
+    include incidenthub.frontend.profile_ui
+    include incidenthub.frontend.api_client
+    include incidenthub.backend.notifications_api
+    include incidenthub.backend.catalog_api
+    include incidenthub.backend.notification_delivery_queue
+    include incidenthub.backend.notification_bot_repo
+    include incidenthub.backend.notification_settings_repo
+    include incidenthub.backend.outbound_service
+    include incidenthub.backend.audit_pipeline
+    include incidenthub.postgres
+    include incidenthub.postgres.pg_notifications
+    include incidenthub.postgres.pg_catalog
+    include incidenthub.kafka
+    include incidenthub.kafka.kafka_notifications
+    include external_comm_channels
+    autoLayout LeftRight
+  }
+
+  view workflowStudioFlow {
+    title "Workflow Studio End-to-End Flow"
+    include soc_analyst
+    include incidenthub.frontend.workflow_studio_ui
+    include incidenthub.frontend.workflow_list_ui
+    include incidenthub.frontend.workflow_canvas_ui
+    include incidenthub.frontend.workflow_library_ui
+    include incidenthub.frontend.workflow_inspector_ui
+    include incidenthub.frontend.workflow_runs_ui
+    include incidenthub.frontend.api_client
+    include incidenthub.backend.workflow_api
+    include incidenthub.backend.workflow_definition_engine
+    include incidenthub.backend.workflow_runtime
+    include incidenthub.backend.workflow_node_registry
+    include incidenthub.backend.workflow_node_trigger
+    include incidenthub.backend.workflow_node_condition
+    include incidenthub.backend.workflow_node_switch
+    include incidenthub.backend.workflow_node_delay
+    include incidenthub.backend.workflow_node_scheduler
+    include incidenthub.backend.workflow_node_transform
+    include incidenthub.backend.workflow_node_aggregate
+    include incidenthub.backend.workflow_node_analyzer
+    include incidenthub.backend.workflow_node_responder
+    include incidenthub.backend.workflow_node_webhook_trigger
+    include incidenthub.backend.workflow_node_kafka_trigger
+    include incidenthub.backend.workflow_node_redis
+    include incidenthub.backend.workflow_node_postgres
+    include incidenthub.backend.workflow_node_cassandra
+    include incidenthub.backend.workflow_node_telegram
+    include incidenthub.backend.workflow_node_python
+    include incidenthub.backend.workflow_node_s3
+    include incidenthub.backend.workflow_run_repo
+    include incidenthub.backend.catalog_repo
+    include incidenthub.backend.outbound_service
+    include incidenthub.backend.system_repo
+    include incidenthub.postgres
+    include incidenthub.postgres.pg_workflows
+    include incidenthub.postgres.pg_catalog
+    include incidenthub.redis
+    include incidenthub.s3
+    include external_data_sources
+    include external_comm_channels
+    autoLayout LeftRight
+  }
+
+  view workflowRuntimeNodes {
+    title "Workflow Runtime Node Execution Internals"
+    include incidenthub.backend.workflow_runtime
+    include incidenthub.backend.workflow_node_registry
+    include incidenthub.backend.workflow_node_trigger
+    include incidenthub.backend.workflow_node_webhook_trigger
+    include incidenthub.backend.workflow_node_kafka_trigger
+    include incidenthub.backend.workflow_node_condition
+    include incidenthub.backend.workflow_node_switch
+    include incidenthub.backend.workflow_node_delay
+    include incidenthub.backend.workflow_node_scheduler
+    include incidenthub.backend.workflow_node_transform
+    include incidenthub.backend.workflow_node_aggregate
+    include incidenthub.backend.workflow_node_analyzer
+    include incidenthub.backend.workflow_node_responder
+    include incidenthub.backend.workflow_node_redis
+    include incidenthub.backend.workflow_node_postgres
+    include incidenthub.backend.workflow_node_cassandra
+    include incidenthub.backend.workflow_node_telegram
+    include incidenthub.backend.workflow_node_python
+    include incidenthub.backend.workflow_node_s3
+    include incidenthub.backend.outbound_service
+    include incidenthub.backend.catalog_repo
+    include incidenthub.backend.system_repo
+    include incidenthub.redis
+    include incidenthub.s3
+    include incidenthub.kafka
+    include external_data_sources
+    include external_comm_channels
+    autoLayout LeftRight
+  }
+
+  view observabilityPipelines {
+    title "Observability Pipelines (Metrics + Traces)"
+    include platform_admin
+    include incidenthub.backend
+    include incidenthub.backend.request_metrics
+    include incidenthub.backend.system_api
+    include incidenthub.otel
+    include incidenthub.otel.*
+    include incidenthub.prometheus
+    include incidenthub.prometheus.*
+    include incidenthub.grafana
+    include incidenthub.grafana.*
+    include incidenthub.postgres
+    include incidenthub.redis
+    include incidenthub.elastic
+    include incidenthub.s3
+    include incidenthub.ai_model
+    autoLayout TopBottom
+  }
+}
