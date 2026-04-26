@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IncidentHub — Buyer Platform Walkthrough (T-Bank Style)</title>
+  <style>
+    @page {
+      size: 1600px 900px;
+      margin: 0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: #111111;
+      background: #ffffff;
+    }
+    .slide {
+      width: 1600px;
+      height: 900px;
+      padding: 50px 56px;
+      page-break-after: always;
+      position: relative;
+      background: #ffffff;
+      overflow: hidden;
+      box-shadow: inset 0 10px 0 #ffdd2d;
+    }
+    .slide:last-child { page-break-after: auto; }
+    .brand {
+      position: absolute;
+      top: 18px;
+      right: 26px;
+      color: #ffdd2d;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .index {
+      position: absolute;
+      top: 22px;
+      left: 56px;
+      font-size: 14px;
+      color: #3f3f46;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      margin: 0 0 14px;
+      font-size: 56px;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: #111111;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 38px;
+      line-height: 1.16;
+      letter-spacing: -0.01em;
+      color: #111111;
+    }
+    h3 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      line-height: 1.2;
+      color: #111111;
+    }
+    p, li, td, th {
+      font-size: 20px;
+      line-height: 1.35;
+      margin: 0;
+      color: #111111;
+    }
+    ul {
+      margin: 10px 0 0;
+      padding-left: 24px;
+    }
+    .muted { color: #3f3f46; }
+    .accent { color: #ffdd2d; font-weight: 700; }
+    .lead {
+      font-size: 26px;
+      line-height: 1.34;
+      max-width: 1400px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 14px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #d4d4d8;
+      border-left: 6px solid #ffdd2d;
+      border-radius: 16px;
+      padding: 16px 18px;
+      box-shadow: none;
+    }
+    .kpi {
+      font-size: 38px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      letter-spacing: -0.02em;
+      color: #ffdd2d;
+    }
+    .img {
+      display: block;
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      box-shadow: none;
+      background: transparent;
+      object-fit: cover;
+    }
+    .img-tall {
+      display: block;
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      box-shadow: none;
+      background: transparent;
+      max-height: 700px;
+      object-fit: contain;
+    }
+    .img-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .img-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #ffffff;
+      border: 1px solid #d4d4d8;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .table th,
+    .table td {
+      border-bottom: 1px solid #e4e4e7;
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .table th {
+      background: #fafafa;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #111111;
+    }
+    .small {
+      font-size: 16px;
+      line-height: 1.35;
+    }
+    .foot {
+      position: absolute;
+      left: 56px;
+      bottom: 24px;
+      color: #3f3f46;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <section class="slide">
+    <div class="brand">IncidentHub Buyer Deck</div>
+    <h1>IncidentHub: обзор платформы для покупателей</h1>
+    <p class="lead">Полный walkthrough всех экранов и функций фронтенда: <span class="accent">Dashboard, Alerts, Cases, Forum, Templates, Workflow Studio, Connectors, Administration, Profile, Security</span>.</p>
+    <div class="grid-3" style="margin-top:26px;">
+      <div class="card"><div class="kpi">SOC-ready</div><p>Единое рабочее пространство для triage, расследований и response.</p></div>
+      <div class="card"><div class="kpi">Automation-first</div><p>Коннекторы, анализаторы, респондеры и визуальные workflow.</p></div>
+      <div class="card"><div class="kpi">Multi-tenant</div><p>Role-based доступ, tenant isolation, управляемые API токены.</p></div>
+    </div>
+    <div class="img-grid-2" style="margin-top:18px;">
+      <img class="img" src="assets/investor-login.png" alt="Login" />
+      <img class="img" src="assets/investor-dashboard.png" alt="Dashboard" />
+    </div>
+    <div class="foot">Дата: 25 февраля 2026 • Источник: live UI + frontend/backend walkthrough</div>
+  </section>
+
+  <section class="slide">
+    <div class="index">1 / 26</div><div class="brand">Маршрутизация</div>
+    <h2>Карта приложения и доступы</h2>
+    <table class="table small">
+      <tr><th>Route</th><th>Раздел</th><th>Кому доступно</th><th>Назначение</th></tr>
+      <tr><td>/login</td><td>Auth</td><td>Неавторизованные</td><td>Вход в платформу и выпуск JWT-сессии.</td></tr>
+      <tr><td>/:tenantSlug/dashboard</td><td>Dashboard</td><td>Все авторизованные</td><td>Операционный обзор, метрики, статус системы, дежурства.</td></tr>
+      <tr><td>/:tenantSlug/alerts, /:tenantSlug/alerts/:id</td><td>Alerts</td><td>Все авторизованные</td><td>Triage входящих событий, связывание с кейсами, запуск действий.</td></tr>
+      <tr><td>/:tenantSlug/cases, /:tenantSlug/cases/:id</td><td>Cases</td><td>Все авторизованные</td><td>Полный цикл расследования и управления инцидентом.</td></tr>
+      <tr><td>/:tenantSlug/forum, /:tenantSlug/forum/:id</td><td>Forum</td><td>Все авторизованные</td><td>Переписка по кейсам и коммуникации с внешними участниками.</td></tr>
+      <tr><td>/:tenantSlug/templates</td><td>Templates</td><td>Все авторизованные</td><td>Шаблоны анализаторов/респондеров, шаблоны кейсов, типы observables.</td></tr>
+      <tr><td>/:tenantSlug/workflow-studio</td><td>Workflow Studio</td><td>analyst / tenant_admin / platform_admin</td><td>Визуальный конструктор workflow, test-run/prod-run и история запусков.</td></tr>
+      <tr><td>/:tenantSlug/administration</td><td>Administration</td><td>tenant_admin / platform_admin</td><td>Пользователи, тенанты, достижения, XP, API токены, service alerts.</td></tr>
+      <tr><td>/:tenantSlug/outbound-connectors, /:tenantSlug/inbound-connectors</td><td>Connectors</td><td>tenant_admin / platform_admin</td><td>Исходящие и входящие интеграции, runtime и обработка событий.</td></tr>
+      <tr><td>/:tenantSlug/profile, /:tenantSlug/users/:id, /:tenantSlug/security</td><td>Profile & Security</td><td>Все авторизованные</td><td>Профили пользователей, прогресс, сессии, пароль и Telegram-уведомления.</td></tr>
+    </table>
+  </section>
+
+  <section class="slide">
+    <div class="index">2 / 26</div><div class="brand">Dashboard</div>
+    <h2>Dashboard: командный операционный центр</h2>
+    <div class="grid-2">
+      <div>
+        <img class="img" src="assets/investor-dashboard.png" alt="Dashboard" />
+      </div>
+      <div class="card">
+        <h3>Что здесь делает SOC-команда</h3>
+        <ul>
+          <li>Смотрит критичные KPI: открытые кейсы, активные алерты, среднее время расследования.</li>
+          <li>Контролирует дежурства и смены аналитиков.</li>
+          <li>Переходит к проблемным зонам через быстрые ссылки.</li>
+          <li>Отслеживает общую стабильность модулей платформы.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">3 / 26</div><div class="brand">Alerts</div>
+    <h2>Alerts: intake и triage событий</h2>
+    <div class="img-grid-2">
+      <img class="img" src="assets/investor-alerts.png" alt="Alerts list" />
+      <img class="img" src="assets/investor-alert-detail.png" alt="Alert detail" />
+    </div>
+    <div class="grid-2" style="margin-top:14px;">
+      <div class="card small"><b>Список алертов:</b> фильтрация, массовое выделение, привязка к существующему кейсу, создание кейса из алертов, bulk delete.</div>
+      <div class="card small"><b>Карточка алерта:</b> контекст, severity/source/tags/owner, быстрые действия, переход к расследованию.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">4 / 26</div><div class="brand">Analyzers / Responders</div>
+    <h2>Run Action: запуск анализаторов и респондеров</h2>
+    <div class="img-grid-2">
+      <img class="img" src="assets/investor-run-action-dialog-analyzer.png" alt="Run Action analyzer" />
+      <img class="img" src="assets/investor-run-action-dialog-responder.png" alt="Run Action responder" />
+    </div>
+    <div class="card" style="margin-top:14px;">
+      <p><span class="accent">Назначение:</span> оператор выбирает observable и шаблон действия (analyzer/responder), выполняет шаг и получает результат прямо в интерфейсе. Это bridge между triage и автоматизацией.</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">5 / 26</div><div class="brand">Cases</div>
+    <h2>Cases: единая точка расследования</h2>
+    <div class="grid-2">
+      <img class="img" src="assets/investor-cases.png" alt="Cases" />
+      <div class="card">
+        <h3>Основные действия</h3>
+        <ul>
+          <li>Поиск и фильтры по статусам, критичности, владельцу.</li>
+          <li>Массовые операции над выбранными кейсами.</li>
+          <li>Создание/удаление кейсов, назначение владельцев.</li>
+          <li>Переход в детальную карточку расследования.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">6 / 26</div><div class="brand">Case Tabs I</div>
+    <h2>Case Detail: вкладки расследования (1/3)</h2>
+    <div class="img-grid-2">
+      <img class="img" src="assets/investor-case-overview.png" alt="Case overview" />
+      <img class="img" src="assets/investor-case-timeline.png" alt="Case timeline" />
+    </div>
+    <div class="grid-2" style="margin-top:12px;">
+      <div class="card small"><b>Overview:</b> summary, метрики, AI verdict/history, обсуждение и ключевые атрибуты кейса.</div>
+      <div class="card small"><b>Timeline:</b> хронология событий расследования и действий команды.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">7 / 26</div><div class="brand">Case Tabs II</div>
+    <h2>Case Detail: вкладки расследования (2/3)</h2>
+    <div class="img-grid-2">
+      <img class="img" src="assets/investor-case-tasks.png" alt="Case tasks" />
+      <img class="img" src="assets/investor-case-observables.png" alt="Case observables" />
+    </div>
+    <div class="grid-2" style="margin-top:12px;">
+      <div class="card small"><b>Tasks:</b> план расследования, ответственность, обязательность шагов, прогресс выполнения.</div>
+      <div class="card small"><b>Observables:</b> IOC/Entities, вердикты, теги, добавление и коррекция в контексте кейса.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">8 / 26</div><div class="brand">Case Tabs III</div>
+    <h2>Case Detail: вкладки расследования (3/3)</h2>
+    <div class="grid-2">
+      <div>
+        <img class="img" src="assets/investor-case-attachments.png" alt="Case attachments" />
+        <img class="img" src="assets/investor-case-comments.png" alt="Case comments" style="margin-top:10px;" />
+      </div>
+      <div>
+        <img class="img" src="assets/investor-case-mitre.png" alt="Case MITRE" />
+        <img class="img" src="assets/investor-case-connectors.png" alt="Case connectors" style="margin-top:10px;" />
+      </div>
+    </div>
+    <div class="card small" style="margin-top:10px;">Вкладки <b>Attachments</b>, <b>Comments</b>, <b>MITRE</b>, <b>Connectors</b> обеспечивают evidence-менеджмент, техническую атрибуцию и запуск интеграций прямо из кейса.</div>
+  </section>
+
+  <section class="slide">
+    <div class="index">9 / 26</div><div class="brand">Communications</div>
+    <h2>Case Communications + Forum + Telegram proxy e2e</h2>
+    <div class="img-grid-3">
+      <img class="img" src="assets/investor-case-communications.png" alt="Case communications" />
+      <img class="img" src="assets/investor-case-communications-telegram-e2e.png" alt="Case communications telegram e2e" />
+      <img class="img" src="assets/investor-forum-thread.png" alt="Forum thread" />
+    </div>
+    <div class="card" style="margin-top:12px;">
+      <p>Live-проверка Telegram proxy выполнена end-to-end: отправка сообщения из кейса, sync replies и отображение inbound ответов в треде без выхода из IncidentHub.</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">10 / 26</div><div class="brand">Forum</div>
+    <h2>Forum: контекстная переписка по кейсам</h2>
+    <div class="grid-2">
+      <img class="img" src="assets/investor-forum.png" alt="Forum list" />
+      <div class="card">
+        <h3>Для чего нужен</h3>
+        <ul>
+          <li>Связь расследования с конкретным обсуждением и участниками.</li>
+          <li>Видимость статуса коммуникаций по каждому кейсу.</li>
+          <li>Единая история сообщений для handoff между сменами.</li>
+          <li>Поддержка файлов и внешних reply sync.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">11 / 26</div><div class="brand">Templates I</div>
+    <h2>Templates: Response Templates (вкладка 1)</h2>
+    <div class="grid-2">
+      <img class="img" src="assets/investor-templates-response.png" alt="Templates response" />
+      <div class="card">
+        <h3>Назначение вкладки</h3>
+        <ul>
+          <li>Создание шаблонов для analyzer/responder действий.</li>
+          <li>Хранение параметризованных шаблонов контента.</li>
+          <li>Повторное использование в Run Action и workflow-нодах.</li>
+          <li>Снижение ручной рутины в incident response.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">12 / 26</div><div class="brand">Templates II</div>
+    <h2>Templates: Case Templates (вкладка 2)</h2>
+    <div class="grid-2">
+      <img class="img" src="assets/investor-templates-case.png" alt="Templates case" />
+      <div class="card">
+        <h3>Назначение вкладки</h3>
+        <ul>
+          <li>Типовые сценарии расследования (playbook style).</li>
+          <li>Предзаполнение severity, тегов, обязательных задач.</li>
+          <li>Унификация качества кейсов между командами и тенантами.</li>
+          <li>Быстрое создание новых кейсов по best practice.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">13 / 26</div><div class="brand">Templates III</div>
+    <h2>Templates: Observable Types (вкладка 3)</h2>
+    <div class="grid-2">
+      <img class="img" src="assets/investor-templates-observable.png" alt="Templates observable" />
+      <div class="card">
+        <h3>Назначение вкладки</h3>
+        <ul>
+          <li>Каталог типов observables и их форматов.</li>
+          <li>Валидация и нормализация IOC данных.</li>
+          <li>Единый стандарт для enrichment и аналитики.</li>
+          <li>Ускорение интеграций с внешними data sources.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">14 / 26</div><div class="brand">Workflow Studio I</div>
+    <h2>Workflow Studio: визуальный конструктор (Native)</h2>
+    <div class="img-grid-3">
+      <img class="img" src="assets/investor-workflow-studio.png" alt="Workflow studio" />
+      <img class="img" src="assets/investor-workflow-studio-editor.png" alt="Workflow editor" />
+      <img class="img" src="assets/investor-workflow-run-history.png" alt="Workflow run history" />
+    </div>
+    <div class="card" style="margin-top:12px;">
+      <p><span class="accent">Single native surface:</span> единый Builder для SOC-нод IncidentHub и AI Agent чат для генерации workflow по промпту.</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">15 / 26</div><div class="brand">Workflow Studio II</div>
+    <h2>Workflow Studio: исполнение и контроль запусков</h2>
+    <div class="grid-2">
+      <img class="img-tall" src="assets/investor-workflow-run-history.png" alt="Workflow execution view" />
+      <div class="card">
+        <h3>Операционная надежность workflow</h3>
+        <ul>
+          <li>Тестовый запуск из редактора (Test run) с немедленной обратной связью.</li>
+          <li>Сохранение/публикация workflow и включение по switch в UI.</li>
+          <li>Хранение истории запусков в backend с retention до последних 1000 прогонов.</li>
+          <li>Основа для SLA-мониторинга и аудита автоматизаций.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">16 / 26</div><div class="brand">Connectors</div>
+    <h2>Outbound / Inbound Connectors</h2>
+    <div class="img-grid-2">
+      <img class="img" src="assets/investor-outbound-connectors.png" alt="Outbound connectors" />
+      <img class="img" src="assets/investor-inbound-connectors.png" alt="Inbound connectors" />
+    </div>
+    <div class="grid-2" style="margin-top:12px;">
+      <div class="card small"><b>Outbound:</b> исходящие действия (уведомления, webhook, интеграционные вызовы, синхронизация коммуникаций).</div>
+      <div class="card small"><b>Inbound:</b> ingest событий из внешних источников, schedule/polling, runtime-статусы, dedup.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">17 / 26</div><div class="brand">Administration I</div>
+    <h2>Administration: вкладки Users и Tenants</h2>
+    <div class="img-grid-2">
+      <img class="img" src="assets/investor-admin-users.png" alt="Admin users" />
+      <img class="img" src="assets/investor-admin-tenants.png" alt="Admin tenants" />
+    </div>
+    <div class="grid-2" style="margin-top:12px;">
+      <div class="card small"><b>Users:</b> создание, роли, команды, админ-права, привязка к тенантам.</div>
+      <div class="card small"><b>Tenants:</b> управление организациями/пространствами, лимиты и настройки доступа.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">18 / 26</div><div class="brand">Administration II</div>
+    <h2>Administration: Achievements и Experience</h2>
+    <div class="img-grid-2">
+      <img class="img" src="assets/investor-admin-achievements.png" alt="Admin achievements" />
+      <img class="img" src="assets/investor-admin-experience.png" alt="Admin experience" />
+    </div>
+    <div class="grid-2" style="margin-top:12px;">
+      <div class="card small"><b>Achievements:</b> настройка наград и XP за достижение.</div>
+      <div class="card small"><b>Experience:</b> ручные начисления XP пользователям с описанием причин и историей.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">19 / 26</div><div class="brand">Administration III</div>
+    <h2>Administration: API Tokens, Load, Notification Bots, Service Alerts</h2>
+    <div class="img-grid-2">
+      <div>
+        <img class="img" src="assets/investor-admin-api-tokens.png" alt="Admin api tokens" />
+        <img class="img" src="assets/investor-admin-load.png" alt="Admin load" style="margin-top:10px;" />
+      </div>
+      <div>
+        <img class="img" src="assets/investor-admin-notification-bots.png" alt="Admin notification bots" />
+        <img class="img" src="assets/investor-admin-service-alerts.png" alt="Admin service alerts" style="margin-top:10px;" />
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:12px;">
+      <div class="card small"><b>API Tokens + Load:</b> управление доступом к API и операционные load/health контуры.</div>
+      <div class="card small"><b>Notification Bots + Service Alerts:</b> tenant-scoped Telegram бот и авто-алерты по low RPS/high latency.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">20 / 26</div><div class="brand">Profile</div>
+    <h2>Profile и User Profile</h2>
+    <div class="img-grid-2">
+      <img class="img" src="assets/investor-profile.png" alt="Own profile" />
+      <img class="img" src="assets/investor-user-profile.png" alt="Public profile" />
+    </div>
+    <div class="card" style="margin-top:12px;">
+      <p>Профили включают персональные данные, достижения, уровень/XP прогресс, метрики расследований и публичную карточку аналитика для командной прозрачности.</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">21 / 26</div><div class="brand">Security</div>
+    <h2>Security: Password, Sessions, Notifications</h2>
+    <div class="img-grid-3">
+      <img class="img" src="assets/investor-security-password.png" alt="Security password" />
+      <img class="img" src="assets/investor-security-sessions.png" alt="Security sessions" />
+      <img class="img" src="assets/investor-security-notifications.png" alt="Security notifications" />
+    </div>
+    <div class="grid-3" style="margin-top:12px;">
+      <div class="card small"><b>Password:</b> смена пароля с подтверждением и проверками.</div>
+      <div class="card small"><b>Sessions:</b> просмотр активных сессий и принудительное завершение.</div>
+      <div class="card small"><b>Notifications:</b> персональная настройка in-app/Telegram доставки уведомлений.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">22 / 26</div><div class="brand">Module Matrix</div>
+    <h2>Покрытие функциональных блоков</h2>
+    <table class="table small">
+      <tr><th>Блок</th><th>Где в UI</th><th>Зачем бизнесу</th></tr>
+      <tr><td>Triage</td><td>Alerts + Run Action</td><td>Снижение time-to-first-decision и ускорение эскалации.</td></tr>
+      <tr><td>Investigation</td><td>Cases (9 вкладок)</td><td>Собирает весь контекст расследования в одном месте.</td></tr>
+      <tr><td>Communications</td><td>Forum + Case Communications</td><td>Прозрачная коммуникация с внутренними/внешними участниками.</td></tr>
+      <tr><td>Automation</td><td>Templates + Workflow Studio + Connectors</td><td>Масштабирование SOC операций без роста ручного труда.</td></tr>
+      <tr><td>AI Co-pilot</td><td>Global AI panel + Case AI Analyze</td><td>Ускорение гипотез и next-best-action для аналитиков SOC.</td></tr>
+      <tr><td>Governance</td><td>Administration + API Tokens + Security</td><td>Контроль доступа, мультиарендность, compliance-ready управление.</td></tr>
+      <tr><td>People Ops</td><td>Profile + XP + Achievements</td><td>Мотивация команды и прозрачная персональная эффективность.</td></tr>
+      <tr><td>Data Layer</td><td>PostgreSQL + Elasticsearch + Redis</td><td>Надежное хранение, быстрый поиск и кэширование чтений.</td></tr>
+      <tr><td>Async Layer</td><td>Kafka (alerts/cases/notifications/workflows)</td><td>Асинхронная обработка тяжелых операций и устойчивость под нагрузкой.</td></tr>
+      <tr><td>Observability</td><td>Prometheus + Grafana + tracing</td><td>Контроль SLO, latency/RPS, диагностика деградаций и алертинг.</td></tr>
+    </table>
+  </section>
+
+  <section class="slide">
+    <div class="index">23 / 26</div><div class="brand">Executive View</div>
+    <h2>Что важно руководству</h2>
+    <div class="grid-3">
+      <div class="card"><div class="kpi">Product Depth</div><p>Платформа покрывает весь SOC-процесс end-to-end, не только alerting.</p></div>
+      <div class="card"><div class="kpi">Monetization-ready</div><p>Multi-tenant + RBAC + API tokens + admin controls = готовая SaaS-модель.</p></div>
+      <div class="card"><div class="kpi">Expansion-ready</div><p>Workflow + connectors дают платформенную extensibility для новых интеграций.</p></div>
+    </div>
+    <div class="card" style="margin-top:18px;">
+      <p>Дифференциатор: единый UX для SOC операций + настраиваемые автоматизации + интеграции без выхода из платформы.</p>
+    </div>
+    <div class="grid-2" style="margin-top:14px;">
+      <img class="img" src="assets/investor-ai-copilot.png" alt="AI Security Copilot" />
+      <div class="card">
+        <h3>AI Security Co-pilot</h3>
+        <ul>
+          <li>Контекстный диалог в интерфейсе SOC без переключения инструмента.</li>
+          <li>Новые чаты, история, быстрый доступ из правой панели.</li>
+          <li>Ответы и рекомендации в контексте текущих кейсов/алертов.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">24 / 26</div><div class="brand">Load Testing</div>
+    <h2>Нагрузочное тестирование: результаты</h2>
+    <div class="grid-3">
+      <div class="card"><div class="kpi">400 RPS</div><p>Максимальная протестированная устойчивая нагрузка по ключевым read/write маршрутам.</p></div>
+      <div class="card"><div class="kpi">0%</div><p>Ошибки на верхней ступени нагрузки для профилей чтения и записи.</p></div>
+      <div class="card"><div class="kpi">2-10 ms</div><p>P95 задержки на 400 RPS для /me, /alerts, /cases и POST /alerts, /cases.</p></div>
+    </div>
+    <table class="table small" style="margin-top:16px;">
+      <tr><th>Маршрут</th><th>Макс. устойчивая нагрузка</th><th>P95 на верхней ступени</th><th>Error rate</th></tr>
+      <tr><td>GET /api/v1/me</td><td>400 RPS</td><td>2.44 ms</td><td>0.00%</td></tr>
+      <tr><td>GET /api/v1/alerts</td><td>400 RPS</td><td>2.36 ms</td><td>0.00%</td></tr>
+      <tr><td>GET /api/v1/cases</td><td>400 RPS</td><td>2.65 ms</td><td>0.00%</td></tr>
+      <tr><td>GET /api/v1/search?q=loadtest</td><td>400 RPS</td><td>2.33 ms</td><td>0.00%</td></tr>
+      <tr><td>POST /api/v1/alerts</td><td>400 RPS</td><td>9.11 ms</td><td>0.00%</td></tr>
+      <tr><td>POST /api/v1/cases</td><td>400 RPS</td><td>9.03 ms</td><td>0.00%</td></tr>
+    </table>
+    <div class="card small" style="margin-top:14px;">
+      Источник данных: <b>backend/loadtest/results/report-async-fix.md</b> (UTC: 2026-02-23T19:36:27Z, step=5s, workers=200, thresholds: error &lt; 2%, p95 &lt; 700ms).
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">25 / 26</div><div class="brand">Artifacts</div>
+    <h2>Артефакты и исходники презентации</h2>
+    <div class="card" style="margin-top:20px;">
+      <p><b>HTML (исходник):</b> docs/presentation/incidenthub-presentation-tbank.html</p>
+      <p><b>Скриншоты:</b> docs/presentation/assets/investor-*.png</p>
+      <p><b>PDF (финальный):</b> output/presentation/IncidentHub-Buyer-TBank-Style.pdf</p>
+    </div>
+    <div class="card" style="margin-top:18px;">
+      <p>В deck включены все ключевые страницы и вкладки фронтенда текущего продукта: Dashboard, Alerts, Cases (все tabs), Communications/Forum, Templates (все tabs), Workflow Studio (Native + AI Agent), Administration tabs, Profile, Security, AI Co-pilot.</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="index">26 / 26</div><div class="brand">IncidentHub</div>
+    <h1>Спасибо</h1>
+    <p class="lead">IncidentHub готов к демонстрации для коммерческого пилота и enterprise-поставки.</p>
+    <div class="grid-3" style="margin-top:18px;">
+      <div class="card"><div class="kpi">End-to-End SOC</div><p>От intake алертов до закрытия кейса и пост-коммуникации.</p></div>
+      <div class="card"><div class="kpi">Automation Layer</div><p>Workflow Studio, коннекторы и шаблоны для масштабирования операций.</p></div>
+      <div class="card"><div class="kpi">Enterprise Control</div><p>Multi-tenant, RBAC, API-токены, аудитируемые действия и безопасность.</p></div>
+    </div>
+  </section>
+</body>
+</html>
